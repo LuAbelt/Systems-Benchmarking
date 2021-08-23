@@ -3,18 +3,18 @@
 # This bash file builds and benchmarks lz4 against a specific commit
 
 USER=abeltluk
-USER_BASE_DIR=/scratch/$USER
+USER_BASE_DIR=/scratch/$USER/SystemsBenchmarking
 LZBENCH_DIR=$USER_BASE_DIR/lzbench
 LZ4_DIR=$USER_BASE_DIR/lz4
 SILESIA_DIR=$USER_BASE_DIR/silesia
 
 RELEASE=$1
 
-REL_BENCH_BASE_DIR=$USER_BASE_DIR/commit_benchmark
-WORKING_DIR=$REL_BENCH_BASE_DIR/build/$RELEASE
+BENCH_BASE_DIR=$2
+WORKING_DIR=$BENCH_BASE_DIR/build/$RELEASE
 
-RESULT_FILE=$REL_BENCH_BASE_DIR/results/$RELEASE.res
-TIMINGS_FILE=$REL_BENCH_BASE_DIR/results/$RELEASE.timings
+RESULT_FILE=$BENCH_BASE_DIR/results/$RELEASE.res
+TIMINGS_FILE=$BENCH_BASE_DIR/results/$RELEASE.timings
 
 # Setup environment
 mkdir $WORKING_DIR
@@ -40,7 +40,7 @@ cd ./lzbench
 make
 
 cd $WORKING_DIR
-# Run lzbench TODO
+# Run lzbench 
 ./lzbench/lzbench -elz4 -i10,10 -j -r -o4 -v silesia > $RESULT_FILE
 
 # Cleanup

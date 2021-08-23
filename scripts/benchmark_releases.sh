@@ -13,5 +13,6 @@ RELEASES_FILE=$USER_BASE_DIR/lz4releases
 
 RELEASES_LIST=($(<$RELEASES_FILE))
 RELEASE=${RELEASES_LIST[${SLURM_ARRAY_TASK_ID}]}
+BENCH_BASE_DIR=$USER_BASE_DIR/release_benchmark
 
-srun ./run_benchmark.sh $RELEASE
+srun ./run_benchmark.sh $RELEASE $BENCH_BASE_DIR
