@@ -1,0 +1,10 @@
+#!/bin/bash
+#SBATCH --job-name=testjob-luabelt
+#SBATCH --output=/scratch/abeltluk/slurm_logs/slurm_log_%j.out
+#SBATCH --time=10:00
+#SBATCH --constraint=eku
+#SBATCH --partition=seminar
+
+srun sleep 10
+srun echo Hello from $(hostname)
+
