@@ -37,7 +37,7 @@
 
 % Title for the seminar
 	%\newcommand{\theseminartitle}{"Performance Measurements Before Releases vs. Each Commits"}
-	\newcommand{\theseminartitle}{"Using Continuous Benchmarking in Productive Systems -- Opportunities and Challenges"}
+	\newcommand{\theseminartitle}{"Using Benchmarking in Productive Development Systems -- Opportunities and Challenges"}
 
 %*********************************************************************%
 % THE DOCUMENT                                                        %
@@ -82,61 +82,42 @@
 	%	4. 
 
 	% Introduction
-	\section{General}
-	This document will briefly outline the experiment idea for the topic "Performance Measurements Before Releases vs. Each Commits" in the seminar "Systems Benchmarking". The goal of this experiment and the corresponding paper is to showcase, how continous performance measurements throughout the whole development process can be used to detect and fix performance regressions at a very early stage.
+\section{Introduction}
+Over the past years system benchmarks have become more prominent in a variety of contexts and use cases. As a result more benchmarking tools became available that are used in both commercial systems and are widely adopted for academic purposes.
 
-	To achieve this, the experiment will first analyze the performance of public releases an open-source project to find a performance regression between two releases. Then, a performance measurement will be done for every commit between these two releases. We will use the data aquired by these performance measurements to demonstrate how or if various change detection measurements could havedetected this regression early on.
+In this paper we give an overview of the general concepts of system benchmarks before we consider in detail how classical benchmarking approaches can be used and extended to integrate it into the standard development process of software. Specifically, we take a look at how benchmark can be used to swiftly detect and react to performance changes throughout the development process. In order to do this we will take a look at Change-Point detection algorithms. We will outline and analyse the methodology and opportunities of such approaches while taking a careful look at the challenges that may arise due to this.
 
-\section{Experiment Setup}
+To support and evaluate our claims, we will conduct a practical experiment where we will use and compare several banchmarking techniques on a piece of well known, open-source software.
+TODO
 
-For my experiment I will use the open-source compression library \texttt{lz4}\footnote{\url{https://github.com/lz4/lz4}} as it has a active commit and release history. For the performance measurement itself we will use the latest version of the open-source project \texttt{lzbench}\footnote{https://github.com/inikep/lzbench}. Lzbench is an in-memory compression benchmarking tool that is originally designed to compare different compression algorithms. However for our case we will use it to simply only measure \texttt{lz4} at different releases/commits. For this case we will disable all other compression algorithms that \texttt{lzbench} supports at compile-time. First preliminary tests have shown that \texttt{lzbench} can easily use a different version of \texttt{lz4} than the shipped one by simply replacing the corresponding source files.
+\section{System Benchmarking}
+The term "Benchmark" is a rather broad term that can be interpeted and defined in many different ways depending on the context and application domain. We will use this chapter to give a definition of Benchmarking how we will use it throughout this paper.
 
-For the compression itself we will use the Silesia Data Corpus\footnote{http://sun.aei.polsl.pl/~sdeor/index.php?page=silesia}. The Sileasia Corpus combines a variety of different data in order to create a diverse dataset for compression measurements. 
+\subsection{Definition}
+In standard literature a benchmark is commonly defined as "a tool coupled with a methodology for the evaluation and comparison of systems or components with respect to specific characteristice, such as performance, reliability or security." (\cite{sysbench} p. 4).
 
-After identifying a performance regression between two releases we will collect data for the commits between these releases. To analyze the data collected for these commits we will compare the two following methods:
-\begin{itemize}
-	\item Comparing based on a static threshhold to the last commit/release
-	\item Using Change Point Detection (Specifically E-Divisive Means)\footnote{As described in \url{https://dl.acm.org/doi/pdf/10.1145/3358960.3375791}}
-\end{itemize}
 
-For the change point detection we will use the implementation provided by MongoDB\footnote{https://github.com/mongodb/signal-processing-algorithms}. Since we will also store the raw performance data as returned by \texttt{lzbench} it is also possible to add further methods later on to get a better overview of different methods.
+\subsection{Classification of Benchmarks}
 
-\section{Challenges and possible risks}
-In this section I will briefly outline challenges, risks that might arise during the experiment and also outline possible solutions to them.
+\subsection{Evaluating Benchamrks}
 
-\subsection{Detecting regression between releases}
-\subsubsection{Defining a regression threshhold}
-One of the main challenges will be to define a threshhold for a performance regression between commits. As a first starter we will work with a static threshhold of 10\% as compared to the previous release. However if this value seems to many/less releases we might need to change the threshhold or overthink out strategy overall.
+\section{Detecting Performance Changes}
 
-\subsubsection{No regression detected}
-It might happen that we will detect no noticable performance changes whatsoever between the individual releases. One likely reason for this might be that the actual performance regressions happened while testing the release and where therefore fixed in the actual release.
+\section{Continuous Benchmarking}
+\subsection{Definition}
+\subsection{Usages}
+\subsection{Challenges}
 
-One solution to this might be to select some commit for measurement before the release commit to benchmark on. However this would require a lot of manual triaging to select the "correct" commit based on e.g. the commit or issue history of the project.
+\section{Experiment}
+	\subsection{Experiment Idea \& Goals}
+	\subsection{Experiment Setup}
+	\subsection{Experiment Results}
 
-Then still it could happen that with that strategy we do not detect any performance regressions (or improvements) that we can use as a guideline where to perform our finer measurement. In that case we could:
-\begin{itemize}
-	\item Select an arbitrary release range for our finer analysis -- However this itself bears the risk that we do not detect any change points in this range
-	\item Select a release range based on issues submitted on the GitHub page that indicate that there at least was some performance regression during this period
-	\item Select another project for our experiment
-\end{itemize}
+\section{Evaluation of Performance Results}
 
-\subsection{Measuring individual commits}
+\section{Reflection}
 
-\subsubsection{Commits that won't build}
-If we measure all commits between two releases it is very likely that not all commits will be able to compile. We can easily take this into account by simply skipping these commits and not perform any measurements if we detect a failure during build.
-
-\subsubsection{Number of commits}
-Even when restricting us to the duration between two releases it might still happen that we end up with a lot of commits we need to benchmark individually. Depending how long one benchmark takes this could easily take too much time to finish in a reasonable time frame. Additionally we have to remember that also others might want to use the cluster environment for their experiments, so we should not clog it with hundreds of our jobs.
-
-One possible measure to counteract this is to not measure each individual commit but squash them based on some criterion, e.g. only measuring one commit per day. In practice we will have to take a close look how long an individual performance measurement (including build etc.) takes so that we can esitmate how long our measurements would take in total.
-
-\section{Possible Extensions}
-There are a few possible extensions that could be appended to this experiment idea if time allows it:
-\begin{itemize}
-	\item Using the data collected by individual commits to show how individual commits can be compared effectively\footnote{As shown in \url{https://arxiv.org/pdf/2101.10231.pdf}}
-	\item Extend the regression detection method
-	\item Evaluate the impact on sustainability
-\end{itemize}
+\section{Future Work}
 	
 	%*********************************************************************%
 	% APPENDIX                                                            %
