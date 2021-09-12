@@ -6,17 +6,12 @@
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{amssymb}
+\usepackage{hyperref}
 
 % Support for special characters like "Umlaute"
 \usepackage[utf8]{inputenc}
 
-\ifgerman{
-	\usepackage[ngerman]{babel}
-	\usepackage{ngerman}
-	\usepackage{bibgerm}        % German symbols in BibTeX
-}{
-	\usepackage[english]{babel}
-}
+\usepackage[english]{babel}
 
 %*********************************************************************%
 % META                                                                %
@@ -90,16 +85,19 @@ In this paper we give an overview of the general concepts of system benchmarks b
 To support and evaluate our claims, we will conduct a practical experiment where we will use and compare several banchmarking techniques on a piece of well known, open-source software.
 TODO
 
-\section{System Benchmarking}
-The term "Benchmark" is a rather broad term that can be interpeted and defined in many different ways depending on the context and application domain. We will use this chapter to give a definition of Benchmarking how we will use it throughout this paper.
+\section{System Benchmarks}
+\label{sec:benchmarking}
+The term "Benchmark" is a broad term that can be interpeted and defined in many different ways depending on the context and application domain. We will use this chapter to give a definition of Benchmarking how we will use it throughout this paper.
 
 \subsection{Definition}
-In standard literature a benchmark is commonly defined as "a tool coupled with a methodology for the evaluation and comparison of systems or components with respect to specific characteristice, such as performance, reliability or security." (\cite{sysbench} p. 4).
-
+\label{ssec:bench_definition}
+The term "Benchmark" is used in a variaty of different domains and, according to the Standard Specialization Evalutation Corporation, historically stems from a physical marking that was used as a refernce point on a workbench to check the length of the produced pieces\footnote{SPEC Glossary: \url{https://www.spec.org/spec/glossary/\#benchmark}}. However throughout this paper we are only interested in system benchmarks within the context of software systems and will therefore also refer to the definition of a benchmark as given by Kounev et al.: "a tool coupled with a methodology for the evaluation and comparison of systems or components with respect to specific characteristics, such as performance, reliability or security." (\cite{Kounev} p. 4). As already given from this definition benchmarks can serve as an evaluation for different characteristics. We will more closely look at these in \autoref{ssec:bench_classification}. Throughout this paper we will also mostly refer to the "system or component" that is being benachmarked as the \textit{System under Test} (SUT).
 
 \subsection{Classification of Benchmarks}
+\label{ssec:bench_classification}
 
-\subsection{Evaluating Benchamrks}
+
+\subsection{Evaluating Benchmarks}
 
 \section{Detecting Performance Changes}
 
@@ -129,5 +127,7 @@ In standard literature a benchmark is commonly defined as "a tool coupled with a
 	% LITERATURE                                                          %
 	%*********************************************************************%
 	% As a recommendation JabRef might be a usefull tool for this section. Use myRefs.bib therefore
-	
+	\phantomsection
+	\bibliographystyle{splncs03}
+	\bibliography{literature}	
 \end{document}
