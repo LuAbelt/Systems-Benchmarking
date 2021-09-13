@@ -41,7 +41,7 @@ make
 
 cd $WORKING_DIR
 # Run lzbench 
-./lzbench/lzbench -elz4 -i10,10 -j -r -o4 -v silesia > $RESULT_FILE
+./lzbench/lzbench -elz4 -i100,100 -p3 -j -r -o4 -v silesia > $RESULT_FILE
 
 # Cleanup
 cd $USER_BASE_DIR
