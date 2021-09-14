@@ -100,7 +100,7 @@ The term "Benchmark" is used in a variaty of different domains and, according to
 
 \subsection{Classification of Benchmarks}
 \label{ssec:bench_classification}
-Benchmarks can be classified in a variety of different means. In this section we will give a small overview of the different types of benchmarks there are with respect to the following questions:
+Benchmarks can be classified in a variety of different means. In this section we will give a small overview of the different types of benchmarks there are with respect to the two following questions:
 \begin{enumerate}
 	\item What overall goal does a benchmark serve?
 	\item What qualities are evaluated by an benchmark?
@@ -109,9 +109,28 @@ Benchmarks can be classified in a variety of different means. In this section we
 
 In the broadest sense, benchmarks can be divided into competetive and non-competetive benchmarks. The main motivation of competetive benchmarks is hereby the development of standardized quality criteria that can be used to compare different systems. Certain sources also emphasize this importance on the competetiveness by providing a more detailled definition of the term benchmark, i.e. "a standard tool for competetive evaluation and comparison of competetive systems" (\cite{kistowski2015} p. X).
 
-For non-competetive benchmarks Kounev et al. Further distiguish between the two categories of "rating tools" and "research benchmark. 
+For non-competetive benchmarks Kounev et al. Further distiguish between the two categories of "rating tools" and "research benchmark". Rating tools can serve multiple purposes: Either as a component of an development and system improvement process, as a baseline for regulatory programmes or to serve as common benchmark for research. Research benchmarks on the other hand commonly refer to tools and workloads that may be used for in-depth evaluation of research results, prototypes or productive systems. Based on these descriptions it becomes apparent that there sometimes might be no clear distinction between a rating tool and a research benchmark and the terminology is often determined by the evaluating party (See \cite{Kounev} p. 4).
+
+Regardless of the competetiveness, or lack thereof, of a benchmark the key metrics that are evaluated are often similar or even identical. While historically the main metrics of importance were e.g. security, system reliability and energy efficiency, modern benchmarks also try to cover much more aspects of a software. We will discuss a selection of the quality attributes listed by Kounev et al. that are usually target of modern benchmarks(\cite{Kounev} p. 6 f):
+
+\paragraph{Performance} The term Performance itself can be interpreted in many different means. For this paper, we will focus on one of the most basic interpretations: The amount of work done compared to the time and resources used. A much more in-depth explanation of different performance measures is given by Kounev et al. (See \cite{Kounev} p. 49 ff)
+
+\paragraph{Scalability} TODO Definition needed
+
+\paragraph{Energy Efficiency} TODO Definition needed
+
+\paragraph{Reliability} TODO Definition needed
+
+When it comes to benchmarking strategies two approaches are most prominent: Fixed-Time and Fixed-Work benchmarks. A Fixed-Work Benchmark here describes the most intuitive approach for benchmarking: We fix a specified amount of work $W_i$ and measure the required time $T_i$ that is required to fulfill this work.
+
+While Fixed-Work benchmarks are easy to understand and implement, it introduces an implicit performance bottleneck that is also known as \textit{Amdahl's Law}. It states that the maximum possible performance improvement that can be achieved in Fixed-Work Benchmarks is prohibitly upper-bounded by the fraction of work that is performed by the component that is being improved (See \cite{Kounev} p. 9f).
+
+In Fixed-Time benchmarks, instead of fixing the amount of work $W_i$, the time $T_i$ is bound and the amount of work finished in this time is measured as a metric. As opposed to Fixed-Work Benchmarks the Fixed-Time Benchmarks do not suffer the issue of an upper-bounded maximum improvement as for every improvement, the reduced time can be used to process further work units (See \cite{Kounev} p. 11).
+
 
 \subsection{Evaluating Benchmarks}
+
+
 
 \section{Detecting Performance Changes}
 
