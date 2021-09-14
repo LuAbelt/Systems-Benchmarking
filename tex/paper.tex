@@ -13,6 +13,11 @@
 
 \usepackage[english]{babel}
 
+\usepackage{glossaries}
+
+\makeglossaries
+
+\loadglsentries{glossary}
 %*********************************************************************%
 % META                                                                %
 %*********************************************************************%
@@ -91,11 +96,20 @@ The term "Benchmark" is a broad term that can be interpeted and defined in many 
 
 \subsection{Definition}
 \label{ssec:bench_definition}
-The term "Benchmark" is used in a variaty of different domains and, according to the Standard Specialization Evalutation Corporation, historically stems from a physical marking that was used as a refernce point on a workbench to check the length of the produced pieces\footnote{SPEC Glossary: \url{https://www.spec.org/spec/glossary/\#benchmark}}. However throughout this paper we are only interested in system benchmarks within the context of software systems and will therefore also refer to the definition of a benchmark as given by Kounev et al.: "a tool coupled with a methodology for the evaluation and comparison of systems or components with respect to specific characteristics, such as performance, reliability or security." (\cite{Kounev} p. 4). As already given from this definition benchmarks can serve as an evaluation for different characteristics. We will more closely look at these in \autoref{ssec:bench_classification}. Throughout this paper we will also mostly refer to the "system or component" that is being benachmarked as the \textit{System under Test} (SUT).
+The term "Benchmark" is used in a variaty of different domains and, according to the Standard Specialization Evalutation Corporation, historically stems from a physical marking that was used as a refernce point on a workbench to check the length of the produced pieces\footnote{SPEC Glossary: \url{https://www.spec.org/spec/glossary/\#benchmark}}. However throughout this paper we are only interested in system benchmarks within the context of software systems and will therefore also refer to the definition of a benchmark as given by Kounev et al.: "a tool coupled with a methodology for the evaluation and comparison of systems or components with respect to specific characteristics, such as performance, reliability or security." (\cite{Kounev} p. 4). As already given from this definition benchmarks can serve as an evaluation for different characteristics. We will more closely look at these in \autoref{ssec:bench_classification}. Throughout this paper we will also mostly refer to the "system or component" that is being benachmarked as the \gls{sut}.
 
 \subsection{Classification of Benchmarks}
 \label{ssec:bench_classification}
+Benchmarks can be classified in a variety of different means. In this section we will give a small overview of the different types of benchmarks there are with respect to the following questions:
+\begin{enumerate}
+	\item What overall goal does a benchmark serve?
+	\item What qualities are evaluated by an benchmark?
+	\item How can a benchmark be performed (Benchmarking strategies)
+\end{enumerate}
 
+In the broadest sense, benchmarks can be divided into competetive and non-competetive benchmarks. The main motivation of competetive benchmarks is hereby the development of standardized quality criteria that can be used to compare different systems. Certain sources also emphasize this importance on the competetiveness by providing a more detailled definition of the term benchmark, i.e. "a standard tool for competetive evaluation and comparison of competetive systems" (\cite{kistowski2015} p. X).
+
+For non-competetive benchmarks Kounev et al. Further distiguish between the two categories of "rating tools" and "research benchmark. 
 
 \subsection{Evaluating Benchmarks}
 
