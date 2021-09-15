@@ -25,7 +25,7 @@
 \newcommand{\school}{Saarland Informatics Campus}
 \newcommand{\thetitle}{Seminar: Systems Benchmarking}
 \newcommand{\shorttitle}{Seminar: Systems Benchmarking}
-\newcommand{\thedate}{April 15}
+\newcommand{\thedate}{\today{}}
 \newcommand{\thegermandate}{15. April}
 
 \newcommand{\theforename}{Lukas}
@@ -135,17 +135,25 @@ Apart from the metrics that evaluate the result of a benchmark, there are also s
 
 Over the years, researchers and industry associates alike have defined several criteria that are considered desirable by modern standards. Often the exact terminology of these criteria differs based on authors and the specific application domain, however the concepts in general are similar. Kounev at al. list five core criteria that will be defined in a little more detail in this chapter (\cite{Kounev} p. 13f). A much more in depth discussion of these criteria was performed by Kistowski et al. (See \cite{kistowski2015})
 
-\paragraph{Relevance} TODO: Short explanation
-\paragraph{Reproducibility} TODO: Short explanation
+\paragraph{Relevance} For a benchmark to be meaningful it is important that it, at least to a certain extent, reproduces some scenarios with real world application. This is what the "Relevance" of a benchmark refers to. It tries to define how relevant the produced information is to a potential user of a software. According to Kistowski et al. this makes it "perhaps the most important characteristic" (\cite{kistowski2015} p. 334). However the relevance of a benchmark may also limits the benchmarks applicability meaning, that a highly relevant benchmark for a specific system or component might only narrow applicability while benchmarks with a broad applicability will have a lower relevance but for a wider selection of applications. Kitowski et al. further elaborate on this with specific examples (\cite{kitowski2015} p. 334f)
+
+\paragraph{Reproducibility} Reproducability ensures that it is possible for a third party to produce ideally the same results for a given test environment. Reproducability covers both the consistency between mutliple runs on the same system as well as creating the same results on another environment with a semantically equivalent configuration. 
+
+However, with modern hard- and software systems, optimal reproducability has become challenging. For both hard- and software there are several factors that induce variability. From a hardware side things such as the physical disc layout or network connections may affect benchmarking results. For software systems the causes for variability stem from various different sources. from a low-level perspective, things such as thread scheduling can influence the benchmark results. From a higher level perspective a benchmark has to consider the configurability of a software system itself. Modern software systems often offer lots of different configuration options which can be used to create a tailor made system-variant. En- or disabling a specific feature might heavily influence the performance of a benchmark.
+
+According to Huppler, an ideal benchmark result should be definable as a function fo a hard- and software configuration (See \cite{huppler2009} p. 335). However for real-world applications, modelling such a function is far too complex which requires the benchmark designer to try to model reproducability in other ways. In the end the reproducability of a benchmark is heavuly dependent on the ability to reproduce the benchamrking environment that was used to create this specific benchmark. 
+
 \paragraph{Fairness} TODO: Short explanation
 \paragraph{Verifiability} TODO: Short explanation
 \paragraph{Usability} TODO: Short explanation
 
 \section{Detecting Performance Changes}
 
+
+
 \section{Continuous Benchmarking}
 \subsection{Definition}
-\subsection{Usages}
+\subsection{Strategies and Opportunities}
 \subsection{Challenges}
 
 \section{Experiment}
