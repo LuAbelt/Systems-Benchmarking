@@ -157,14 +157,35 @@ According to Huppler, an ideal benchmark result should be definable as a functio
 \subsection{Challenges}
 
 \section{Experiment}
-
+In this chapter we will further elaborate on the experiment that was conducted. The chapter will give an overview over the general experiment idea and it's goals, the experiment setup and the specific results that were achieved in the experiment runs. An in-depth analysis and evaluation of the experiment results is performed in \autoref{sec:exp_evaluation}
 
 	\subsection{Experiment Idea \& Goals}
+	The main idea of the experiment that was created was to perform a benchmark on a series of versions of a specific open-source software to evaluate the methods and techniques described in this paper. More specifically, we want to evaluate the following questions:
+	\begin{itemize}
+		\item When do we need to benchmark software?
+			\begin{itemize}
+				\item Is it sufficient to benchmark releases?
+				\item Do we need to benchmark every commit?
+			\end{itemize}
+		\item How do different continuous benchmarking approaches compare with respect to:
+			\begin{itemize}
+				\item Complexity of implementation?
+				\item Reliably detecting performance changes?
+				\item Reducing the amount of manual work required by the developer?
+			\end{itemize}
+	\end{itemize}
+
+	Additionally the experiment should also be used to identify other, currently unidentified, challenges and opportunities that this approach might offer.
+
+	For the first complex of the questions mentioned above, the follwoing methology is planned: Firstly, perform a benchmark of all public releases on the open-source software that was selected. In a second step then every individual commit is benchmarked for more fine-grained data. By comparing the performance results of the pure release benchmarking and the individual commit benchmarking it is eventually possible to decide if a specific performance regression could have been detected earlier if a continuous benchmarking approach would have been used.
+
 	\subsection{Experiment Setup}
+
+
 	\subsection{Experiment Results}
 
 \section{Evaluation of Performance Results}
-
+\label{sec:exp_evaluation}
 \section{Reflection}
 
 \section{Future Work}
