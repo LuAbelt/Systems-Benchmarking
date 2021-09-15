@@ -127,10 +127,19 @@ While Fixed-Work benchmarks are easy to understand and implement, it introduces 
 
 In Fixed-Time benchmarks, instead of fixing the amount of work $W_i$, the time $T_i$ is bound and the amount of work finished in this time is measured as a metric. As opposed to Fixed-Work Benchmarks the Fixed-Time Benchmarks do not suffer the issue of an upper-bounded maximum improvement as for every improvement, the reduced time can be used to process further work units (See \cite{Kounev} p. 11).
 
+Additionally there are also further approaches that does not employ fixed time or work at all, but rather employ variable-time and -work characteristics. For this case the matric is a function of the time $T$ and the work $W$. While this technique provides maximum flexibility, this approach is not suitable for all types of benchmarks (See \cite{Kounev} p. 12)
 
 \subsection{Evaluating Benchmarks}
 
+Apart from the metrics that evaluate the result of a benchmark, there are also several attributes that are important to evaluate the quality of the benchmark itself. The designer of a benchmark should always take these attributes into consideration when creating a benchmark. As described by Skadron et al. it is not possible to create a single benchmark that covers all these attributes perfectly. Therefore one either has to create mutliple benchmarks that complement each others weaknesses or choose to sacrifice one of these attributes over the other (\cite{Skadron2003} p. 32f).
 
+Over the years, researchers and industry associates alike have defined several criteria that are considered desirable by modern standards. Often the exact terminology of these criteria differs based on authors and the specific application domain, however the concepts in general are similar. Kounev at al. list five core criteria that will be defined in a little more detail in this chapter (\cite{Kounev} p. 13f). A much more in depth discussion of these criteria was performed by Kistowski et al. (See \cite{kistowski2015})
+
+\paragraph{Relevance} TODO: Short explanation
+\paragraph{Reproducibility} TODO: Short explanation
+\paragraph{Fairness} TODO: Short explanation
+\paragraph{Verifiability} TODO: Short explanation
+\paragraph{Usability} TODO: Short explanation
 
 \section{Detecting Performance Changes}
 
@@ -140,6 +149,8 @@ In Fixed-Time benchmarks, instead of fixing the amount of work $W_i$, the time $
 \subsection{Challenges}
 
 \section{Experiment}
+
+
 	\subsection{Experiment Idea \& Goals}
 	\subsection{Experiment Setup}
 	\subsection{Experiment Results}
@@ -162,5 +173,5 @@ In Fixed-Time benchmarks, instead of fixing the amount of work $W_i$, the time $
 	% As a recommendation JabRef might be a usefull tool for this section. Use myRefs.bib therefore
 	\phantomsection
 	\bibliographystyle{splncs03}
-	\bibliography{literature}	
+	\bibliography{literature}
 \end{document}
