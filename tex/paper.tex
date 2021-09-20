@@ -36,8 +36,8 @@
 	\newcommand{\advisors}{Prof. Sven Apel, \\ Christian Hechtl}
 
 % Title for the seminar
-	%\newcommand{\theseminartitle}{"Performance Measurements Before Releases vs. Each Commits"}
-	\newcommand{\theseminartitle}{"Using Benchmarking in Productive Development Systems -- Opportunities and Challenges"}
+\newcommand{\theseminartitle}{"Performance Measurements Before Releases vs. Each Commits"}
+%\newcommand{\theseminartitle}{"Using Benchmarking in Productive Development Systems -- Opportunities and Challenges"}
 
 %*********************************************************************%
 % THE DOCUMENT                                                        %
@@ -147,19 +147,55 @@ According to Huppler, an ideal benchmark result should be definable as a functio
 \paragraph{Verifiability} TODO: Short explanation
 \paragraph{Usability} TODO: Short explanation
 
-\section{Detecting Performance Changes}
+\section{Using Benchmarks to Detect Performance Changes}
+\label{sec:bench_perf_changes}
+	This section will discuss how benchmarks can be used during software development to detect performance changes.
+	
+	\subsection{Opportunities}
+	\label{ssec:bench_perf_oppo}
+	While benchmarks as a standalone tooling are alreay a useful tool to compare the performance of different systems in order to, for example, select a specific system for a given task it also offers different opportunities. One of these opportunities is to use benchmarking as a tool that is closely integrated into the development cycle in order to evaluate the systems performance throughout the development.
 
+	There are different goals to consider when integrating benchmarking into the development process. Most prominently benchmarking can be used as a quality measure to evaluate a software systems performance. Due to the increasing complexity in modern software systems it is often not possible to foresee the impact of even a small change to the performance of a complex software system (See \cite{grambow2019} p. 1, \cite{daly2021} p. 1). 
+	
+	As a result if not including any performance evaluation might lead to performance regressions being shipped in a stable release to customers and users. Therefore using benchmarks throughout the development process can ensure to detect performance changes and allows to fix them before they are being released (See \cite{daly2021} p. 1). 
 
+	Additionally employing benchmark on a regular basis also opens the window of opportunity for many other improvements if the corresponding infrastructure is setup accordingly. Daly describes in great detail how this was achieved for the MongoDB infrastructure in \cite{daly2021}. In summary the following have been observed:
+	\begin{itemize}
+		\item Increased productivity of the developers
+		\item Reduced noise on the performance data
+		\item Improved Comparison of arbitrary results
+		\item An increased amount of performance improvements
+	\end{itemize}
 
-\section{Continuous Benchmarking}
-\subsection{Definition}
-\subsection{Strategies and Opportunities}
-\subsection{Challenges}
+	For this chapter we want to focus on two main questions; How can performance benchmarking be used to:
+	\begin{enumerate}
+		\item Quickly and reliably detect performance changes?
+		\item Compare arbitrary development states?
+	\end{enumerate}
+
+	The underlying overall question however is, when or how often, one needs to perform a benchmark in order to sufficiently answer these questions. For this two approaches will be compared in the following subsections:
+	\begin{enumerate}
+		\item Benchmarking Before Publishing a new Release
+		\item Benchmarking Every Commit -- Which we will refer to a \textit{Continuous Benchmarking}
+	\end{enumerate}
+
+	\subsection{Benchmarking Before Releases}
+	The most intuitive approach to ensure the performance of a software system throughout the release history is quite simple: Based on the requirements imposed by either a customer or internal quality assurance one defines certain performance threshhold that the software needs to fulfill. Based on these quality criteria the development team can build a benchmark that can check these attributes.
+
+	When 
+
+	\subsection{Continuous Benchmarking}
+		\subsubsection{Definition}
+		\subsubsection{Strategies}
+		\subsubsection{Opportunities and Challenges}
+
 
 \section{Experiment}
 In this chapter we will further elaborate on the experiment that was conducted. The chapter will give an overview over the general experiment idea and it's goals, the experiment setup and the specific results that were achieved in the experiment runs. An in-depth analysis and evaluation of the experiment results is performed in \autoref{sec:exp_evaluation}
 
 	\subsection{Experiment Idea \& Goals}
+	\label{ssec:exp_goals}
+
 	The main idea of the experiment that was created was to perform a benchmark on a series of versions of a specific open-source software to evaluate the methods and techniques described in this paper. More specifically, we want to evaluate the following questions:
 	\begin{itemize}
 		\item When do we need to benchmark software?
@@ -172,6 +208,7 @@ In this chapter we will further elaborate on the experiment that was conducted. 
 				\item Complexity of implementation?
 				\item Reliably detecting performance changes?
 				\item Reducing the amount of manual work required by the developer?
+				\item Can we use this metric to compare arbitrary commits?
 			\end{itemize}
 	\end{itemize}
 
@@ -180,7 +217,61 @@ In this chapter we will further elaborate on the experiment that was conducted. 
 	For the first complex of the questions mentioned above, the follwoing methology is planned: Firstly, perform a benchmark of all public releases on the open-source software that was selected. In a second step then every individual commit is benchmarked for more fine-grained data. By comparing the performance results of the pure release benchmarking and the individual commit benchmarking it is eventually possible to decide if a specific performance regression could have been detected earlier if a continuous benchmarking approach would have been used.
 
 	\subsection{Experiment Setup}
+	\label{ssec:exp_setup}
+	
+	To perform the experiment as described in \autoref{ssec:exp_goals} the open-source software LZ4\footnote{\url{https://github.com/lz4/lz4}} will be used. \texttt{LZ4} is a compression library with an active commit history. In total \texttt{LZ4} offers 31 releases and more than 2500 commits in total\footnote{As of 16.09.2021}. 
+	
+	For the benchmark itself the open source project \texttt{lzbench}\footnote{\url{https://github.com/inikep/lzbench}} will be used. Lzbench is an in-memory compression benchmarking tool that is designed to compare different implementations of compression algorithms. For this experiment all other compression algorithm implementations will be disabled so that only \texttt{lz4} will be benachmarked at different releases and commits. 
+	
+	Lzbench offers the option to disable all the other compression algorithms at compile time. The LZ4 version that is used for the benchmark can simply be changed by overwriting the corresponding lz4 files within the lzbench repository before compilation. In the experiment a slightly adapted version of Lzbench will be used that has the other compression algorithms disabled at compile time and also incorporates some minor changes that were required to ensure compilation on the cluster infrastructure.
 
+	Lzbench also offers a variety of command line switches that influence the behavior of the benchmark. An overview of the switches that were used for executing this experiment can be found in \autoref{tab:cmd_switches}\footnote{Also see: \url{https://github.com/inikep/lzbench}}.
+
+	\begin{table}
+		\caption{Overview of used command line switches for lzbench}
+		\label{tab:cmd_switches}
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{Switch} & \textbf{Description}\\
+			\hline\hline
+			\texttt{-elz4} & Limits the lzbench run to only benchmark the lz4 compression implementation \\
+			\hline
+			\texttt{-i100,100} & Sets the minimum number of compression and decompression iterations to $100$ \\
+			\hline
+			\texttt{-p3} & Sets the output to print the median speed of all iterations \\
+			\hline
+			\texttt{-j} & Join files in memory but compress them independently \\
+			\hline
+			\texttt{-r} & Operate recursively on directories \\
+			\hline 
+			\texttt{-o4} & Sets the output text format to CSV \\
+			\hline
+			\texttt{-v} & Disables progress information \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	As a workload for the compression benchmark the Silesia Data Corpus will be used\footnote{\url{http://sun.aei.polsl.pl/~sdeor/index.php?page=silesia}}. The Silesia Corpus is a diverse dataset that has specifically been designed as a compression workload with the motivation in mind to include a variety of different data sources. By this the Silesia Corpus tries to not favor any compression algorithms that perform very well on a certain type of data(TODO: Citation needed).
+
+Since the LZ4 repository consists of over 2500 commits benchmarking each individual commit is infeasible for the scope of this paper as it would both generate too much data to evaluate properly as well as strain the available shared server resources too much. Therefore a two staged approach will be used:
+\begin{itemize}
+	\item In the first step, a benchmark will be performed on the publicly available releases\footnote{Based on the tags created in the GitHub repository}. The results of these benchmarks will be used to identify a commit range with a significant performance change
+	\item All commits in the identified commit range will be benchmarked for a more detailed and thourough analysis.
+\end{itemize}
+
+The benchmark itself will be performed on the Cluster Infrastructure of the Software Engineering Chair of Saarland University using Slurm\footnote{See \url{https://slurm.schedmd.com/documentation.html}}. The machines that are used are part of the \texttt{kine} cluster with the following hardware configuration\footnote{CPU Information has been aquired using the \texttt{lscpu} command}:
+
+\begin{itemize}
+	\item CPU Model: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
+	\item Cores per Socket: $10$
+	\item Number of Sockets: $2$
+	\item Minimum CPU Frequency: $1200$ MHz
+	\item Maximum CPU Frequency: $3200$ MHz
+	\item Available RAM: 256 GB
+\end{itemize}
+
+For the performance change detection up to three different approaches to compare the benchmarking data will be presented. Based on the results of these approaches the questions posed in \autoref{ssec:exp_goals} will be evaluated and compared. The approaches used are defined in detail in \autoref{sec:exp_evaluation}.
 
 	\subsection{Experiment Results}
 
