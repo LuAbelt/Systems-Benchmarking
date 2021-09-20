@@ -1,3 +1,3 @@
 Compressor name,Compression speed,Decompression speed,Original size,Compressed size,Ratio,Filename
-memcpy ,9886.29,10046.14,211938580,211938580,100.00,12 files
-lz4 1.9.2,456.27,2234.50,211938580,100880147,47.60,12 files
+memcpy ,10009.37,10067.31,211938580,211938580,100.00,12 files
+lz4 1.9.2,456.77,2234.69,211938580,100880147,47.60,12 files
