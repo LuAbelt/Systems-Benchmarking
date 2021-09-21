@@ -180,12 +180,21 @@ According to Huppler, an ideal benchmark result should be definable as a functio
 	\end{enumerate}
 
 	\subsection{Benchmarking Before Releases}
-	The most intuitive approach to ensure the performance of a software system throughout the release history is quite simple: Based on the requirements imposed by either a customer or internal quality assurance one defines certain performance threshhold that the software needs to fulfill. Based on these quality criteria the development team can build a benchmark that can check these attributes.
+	The most intuitive approach to ensure the performance of a software system throughout the release history is quite simple: Based on the requirements imposed by either a customer or internal quality assurance one defines certain performance threshold that the software needs to fulfil. Based on these quality criteria the development team can build a benchmark that can check these attributes.
 
-	When 
+	Once the software is nearing a new release and e.g. a new \textit{Release Candidate} is created internally, the development team can use this benchmark to evaluate whether the candidate introduces a performance regression or if it is fit for a release. There are several benefits of this approach; First of all, it does not necessarily requires an automated performance testing infrastructure but rather can be executed and evaluated manually be the development team. 
+
+	However this approach also bears various challenges that need to be considered in the development of modern software systems. Daly describes two main challenges that arose when using this approach in the development of MongoDB: Firstly it is possible that test from the last release cycle are simply not reproducible with the current software, secondly identifying the exact change that introduced a performance regression poses challenging (\cite{daly2021} p. 1f).
+
+	Both of these challenges are heavily influenced by the length of software release cycles and the resulting amount of commits throughout one cycle. As an example one can take a look at a few open-source repositories. The C++ test framework \textit{googletest}\footnote{See \url{https://github.com/google/googletest}} by Google with it's most recent release (\textit{1.11.0}) in June 2021, while the last release before that (\textit{1.10.0}) was released in October 2019. During this period of 28 months roughly 700 commits have been added to the repository. Similarly for the C implementation of the LZ4 compression algorithm that can be found on GitHub\footnote{\url{https://github.com/lz4/lz4}} in the 15 months between the two most recent releases about 250 commits have been added to the code.
+
+	This can also be observed in commercially used software such as MongoDB which reported about 5500 commits to their code throughout the 2019/2020 release cycle averaging to just about 15 commits per day (\cite{daly2021} p. 2). If the only benchmarking data available is these from the two release candidates this results in an extensive additional overhead to retroactively reconstruct the cause of the root cause.
+
+	One additional dimension that has to be considered is the aspect of configurability. In modern software systems there are often configuration options available which allows to en- and disable certain features to create a tailor-made system variant. However, this additional layer of complexity adds further challenges to benchmarking and change detection. As already very few configuration options lead to an combinatorial explosion of the possible system variants which makes it unfeasible to benchmark all of them(See \cite{apel2020} p. 1).
 
 	\subsection{Continuous Benchmarking}
-		\subsubsection{Definition}
+
+	\subsubsection{Motivation \& Definition}
 		\subsubsection{Strategies}
 		\subsubsection{Opportunities and Challenges}
 
