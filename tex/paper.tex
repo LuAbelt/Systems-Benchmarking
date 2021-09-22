@@ -179,6 +179,7 @@ According to Huppler, an ideal benchmark result should be definable as a functio
 	\end{enumerate}
 
 	\subsection{Benchmarking Before Releases}
+	\label{ssec:bench_rel}
 	The most intuitive approach to ensure the performance of a software system throughout the release history is quite simple: Based on the requirements imposed by either a customer or internal quality assurance one defines certain performance threshold that the software needs to fulfil. Based on these quality criteria the development team can build a benchmark that can check these attributes.
 
 	Once the software is nearing a new release and e.g. a new \textit{Release Candidate} is created internally, the development team can use this benchmark to evaluate whether the candidate introduces a performance regression or if it is fit for a release. There are several benefits of this approach; First of all, it does not necessarily requires an automated performance testing infrastructure but rather can be executed and evaluated manually be the development team. 
@@ -187,16 +188,39 @@ According to Huppler, an ideal benchmark result should be definable as a functio
 
 	Both of these challenges are heavily influenced by the length of software release cycles and the resulting amount of commits throughout one cycle. As an example one can take a look at a few open-source repositories. The C++ test framework \textit{googletest}\footnote{See \url{https://github.com/google/googletest}} by Google with it's most recent release (\textit{1.11.0}) in June 2021, while the last release before that (\textit{1.10.0}) was released in October 2019. During this period of 28 months roughly 700 commits have been added to the repository. Similarly for the C implementation of the LZ4 compression algorithm that can be found on GitHub\footnote{\url{https://github.com/lz4/lz4}} in the 15 months between the two most recent releases about 250 commits have been added to the code.
 
-	This can also be observed in commercially used software such as MongoDB which reported about 5500 commits to their code throughout the 2019/2020 release cycle averaging to just about 15 commits per day (\cite{daly2021} p. 2). If the only benchmarking data available is these from the two release candidates this results in an extensive additional overhead to retroactively reconstruct the cause of the root cause.
+	This can also be observed in commercially used software such as MongoDB which reported about 5500 commits to their code throughout the 2019/2020 release cycle averaging to just about 15 commits per day (\cite{daly2021} p. 2). If the only benchmarking data available is these from the two release candidates this results in an extensive additional overhead to retroactively reconstruct the cause of the root cause. Additionally when only evaluating the performance before release candidates as an affect one would also only detect a performance change at that point. However generally software aims to detect performance defects as soon as possible. 
 
 	One additional dimension that has to be considered is the aspect of configurability. In modern software systems there are often configuration options available which allows to en- and disable certain features to create a tailor-made system variant. However, this additional layer of complexity adds further challenges to benchmarking and change detection. As already very few configuration options lead to an combinatorial explosion of the possible system variants which makes it unfeasible to benchmark all of them(See \cite{apel2020} p. 1).
 
+TODO: Elaborate how/if this can be used to compare arbitrary results
+
 	\subsection{Continuous Benchmarking}
+In this section a technique that will further be reffered to as \textit{Continuous Benchmarking} will be elaborated further. First the motivation of this approach will be discussed to give a working definition. Secondly a selection of possible continuous benchmarking strategies will be outlined. Lastly the possible benefits and potential challenges will be showcased and weighted to give an assessment of using such a technique.
 
 	\subsubsection{Motivation \& Definition}
-		\subsubsection{Strategies}
+	As previously discussed in \autoref{ssec:bench_rel} benchmarking only before releases introduces several challenges. The general motivation of continuous benchmarking is to address these by, simply said, generally adding more data points to evaluate. These added data points can then be used for a more detailled analysis of the systems performance over time. The general idea is similar to those used in \gls{ci} and \gls{cd}. By running tests and releases more frequently, often after every commit, these methods aim to shorten release cycles. \gls{cb} however, is a term and methodology that seems not yet commonly defined in academia.
+
+	We will therefore introduce the following (working) definition for our approach to continuous benchmarking in this paper:
+	\paragraph{Continuous Benchmarking} -- A Systems Benchmarking integrated into a Continuous Integration pipeline which allows to track a (software) systems performance throughout the development process
+
+	\subsubsection{Strategies}
+	TODO: maybe remove and SPlit oppo\&Challenges into two?
+
+
 		\subsubsection{Opportunities and Challenges}
 
+	Tracking a software systems performance can be used in several ways. For this paper we want to focus on two points:
+	\begin{enumerate}
+		\item How can we use the performance data to detect performance changes?
+		\item Can we use this data to compare the performance of different commits?
+	\end{enumerate}
+
+	\section{Change Point Detection}
+	\subsection{Distinction from Outlier Detection}
+	\subsection{Strategies}
+	\subsubsection{Jump Detection}
+	\subsubsection{Trend Detection}
+	\subsubsection{E-Divisive Means}
 
 \section{Experiment}
 In this chapter we will further elaborate on the experiment that was conducted. The chapter will give an overview over the general experiment idea and it's goals, the experiment setup and the specific results that were achieved in the experiment runs. An in-depth analysis and evaluation of the experiment results is performed in \autoref{sec:exp_evaluation}
