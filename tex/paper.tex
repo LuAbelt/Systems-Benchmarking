@@ -24,7 +24,7 @@
 \newcommand{\university}{Saarland University}
 \newcommand{\school}{Saarland Informatics Campus}
 \newcommand{\thetitle}{Seminar: Systems Benchmarking}
-\newcommand{\shorttitle}{Seminar: Systems Benchmarking}
+\newcommand{\shorttitle}{Systems Benchmarking}
 \newcommand{\thedate}{\today{}}
 \newcommand{\thegermandate}{15. April}
 
@@ -197,30 +197,34 @@ TODO: Elaborate how/if this can be used to compare arbitrary results
 	\subsection{Continuous Benchmarking}
 In this section a technique that will further be reffered to as \textit{Continuous Benchmarking} will be elaborated further. First the motivation of this approach will be discussed to give a working definition. Secondly a selection of possible continuous benchmarking strategies will be outlined. Lastly the possible benefits and potential challenges will be showcased and weighted to give an assessment of using such a technique.
 
-	\subsubsection{Motivation \& Definition}
+	\subsubsection{Definition}
 	As previously discussed in \autoref{ssec:bench_rel} benchmarking only before releases introduces several challenges. The general motivation of continuous benchmarking is to address these by, simply said, generally adding more data points to evaluate. These added data points can then be used for a more detailled analysis of the systems performance over time. The general idea is similar to those used in \gls{ci} and \gls{cd}. By running tests and releases more frequently, often after every commit, these methods aim to shorten release cycles. \gls{cb} however, is a term and methodology that seems not yet commonly defined in academia.
 
 	We will therefore introduce the following (working) definition for our approach to continuous benchmarking in this paper:
-	\paragraph{Continuous Benchmarking} -- A Systems Benchmarking integrated into a Continuous Integration pipeline which allows to track a (software) systems performance throughout the development process
+	\paragraph{Continuous Benchmarking} -- A Systems Benchmarking integrated into a Continuous Integration pipeline which allows to track a (software) systems performance throughout the development process.
 
-	\subsubsection{Strategies}
-	TODO: maybe remove and SPlit oppo\&Challenges into two?
 
+
+	\paragraph{}As for any benchmark also \gls{cb} should only be run against a correctly working software. Therefore if integrated into a contiuous integration pipeline, \gls{cb} should be among the last steps such that the correct functionality of the software is already ensured by the \gls{cd} tests beforehand (See \cite{grambow2019} p. 2).
+
+	Similar to \gls{cd} approaches in \gls{cb} the question also arises when to run the \gls{cb}. For \gls{cd}, optimally all tests and operations should be performed after every commit. However in practice this might not always be feasible due to the amount of tests and the associated compute time with that which is why complex software systems often alrady use a multi-tiered approach to \gls{cb}. A similar question arises when deciding on when to run \gls{cb}. Running benchmarks after every commit can pose challenges which will be further evaulated in \autoref{sssec:cb_challenges}. However for this paper our main focus will not be on when to run \gls{cb} but rather how the data produced by a \gls{cb} can be used to detect performance changes.
 
 		\subsubsection{Opportunities and Challenges}
 
-	Tracking a software systems performance can be used in several ways. For this paper we want to focus on two points:
-	\begin{enumerate}
-		\item How can we use the performance data to detect performance changes?
-		\item Can we use this data to compare the performance of different commits?
-	\end{enumerate}
+		Using \gls{cb} opens up several opportunities for improvements to the development process of software. First of all it gives a regular overview of a software systems performance. However the usability of these results is also heavily dependent on the quality of your testbed. Especially the use of cloud infrastructure can introduce additional noise to the performance of a system. As has been shown by Daly and Ingo in \cite{daly2019} reducing the noise in such a scenario is a heavily application specific task that can take several weeks of investigating the systems behavior.
+
+	Running performance benchmarks more frequently naturally also enables to detect performance changes more quickly. As a result it also makes it easier to isolate the cause of the change as there may only be fa few commits between the two benchmarks. However again the comparability of these results heavily depends how and if we can take into account the testbeds noise accordingly as to not errornously flag outliers from noise as actual performance changes. In \cite{daly2021} Daly proposed a technique called \textit{canary testing} to counter these issues. However, in their evaluation canary testing was not viable in their productive system and resulted in more cost than benefit (See \cite{daly2021} p. 6f).
+
+	Another point to consider when using \gls{cb} is the additional data that will inherently get produced. Especially for modern software systems there is not only a single benchmark that is of interest but rather multiple benchmarks with for example different system configurations or workloads. Therefore as Daly et al. and Grambow et al. conclude in their works that manually reviewing the performance data for \gls{cb} is not feasible(See \cite{daly2020} p. 2, \cite{grambow2019} p. 5). As a result, to assist in \gls{cb} and especially in detecting performance changes, automated approaches and toolings are required to preprocess this data and possibly detect performance changes automatically. Approaches for such tools have been described by Daly et al. (\cite{daly2020} p. 2, \cite{daly2021} p. 2ff) and Grambow et al.(\cite{grambow2019}). One of the techniques commonly referred to in this context is change point detection which will be covered in a little more detail in \autoref{sec:cp_detection}.
+
+	Lastly setting up the benchmark itself needs to be considered. There might not be standard tooling available for the specific software or benchmark one wants to perform, therefore additional effort may be required to build a benchmark first (See \cite{grambow2019} p. 5). However the same effort has to be done when performing benchmarks manually so it is not a problem that is unique to \gls{cb}. What is an additional challenge for \gls{cb} however, is the increased amount of hardware and computing time required. In order to produce relevant results a benchmark should ideally reproduce a production-like environment. Therefore for complex software system an individual benchmark is considered to be run for at least 20 minutes (\cite{grambow2019} p. 2). If we take into consideration the amount of commits to modern software already outlined in \autoref{ssec:bench_rel}, most likely additional infrastructure will be required if benchmarking is integrated as an automated process. 
 
 	\section{Change Point Detection}
-	\subsection{Distinction from Outlier Detection}
-	\subsection{Strategies}
-	\subsubsection{Jump Detection}
-	\subsubsection{Trend Detection}
-	\subsubsection{E-Divisive Means}
+	\label{sec:cp_detection}
+	\subsection{Distinction}
+	\label{ssec:cp_distinction}
+	\subsection{E-Divisive Means}
+	\label{ssec:cp_edivisive}
 
 \section{Experiment}
 In this chapter we will further elaborate on the experiment that was conducted. The chapter will give an overview over the general experiment idea and it's goals, the experiment setup and the specific results that were achieved in the experiment runs. An in-depth analysis and evaluation of the experiment results is performed in \autoref{sec:exp_evaluation}
