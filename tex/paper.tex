@@ -14,6 +14,8 @@
 \usepackage[english]{babel}
 
 \usepackage{glossaries}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \makeglossaries
 
@@ -221,8 +223,32 @@ In this section a technique that will further be reffered to as \textit{Continuo
 
 	\section{Change Point Detection}
 	\label{sec:cp_detection}
-	\subsection{Distinction}
+	This chapter will give a brief introduction into a technique from signal processing known as \textit{Changepoint Detection}. It will briefly introduce the term Change point and it's distinction from outliers adn introduce one specific change point detection algorithm. 
+	
+	\subsection{Definition \& Distinction}
 	\label{ssec:cp_distinction}
+	The most commonly domain where the term "Change Point" and "Change Point Detection" are commonly used is the one of signal processing. Literature suggest several different definitions of what a change point is.  According to Aminikhanghahi and Cook: "A change point represents a transition between different states in a process that generates the time series data."(\cite{Samaneh2016} p. 4). It is important to understand the fundamental difference between a change point and an outlier in a time series. The NIST\footnote{National Institute of Standards and Technology} Engineering Statistics Handbook defines an outlier as "an observation that lies an abnormal distance from other values in a random sample from a population." (\cite{nist}, part 7.1.6). 
+
+	\begin{figure}[ht!]
+		\centering
+		\begin{subfigure}[b]{0.45\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{outlier}
+			\caption{Visualization of an outlier}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.45\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{changepoint}
+			\caption{Visualization of a change point}
+		\end{subfigure}
+		\caption{Visual difference of an outlier and a changepoint}
+		\label{fig:outlier_cp}
+	\end{figure}
+
+	In other words, a change point indicates that the overall underlying signal undergoes a noticable change after that point, while an outlier is only a temporary effect that generally does not persist. \autoref{fig:outlier_cp} shows a visualization of this distinction.
+
+	The challenge of finding such change points is commonly referred to as "Change Point Detection" and is defined by Aminikhanghahi and Cook as "the problem of finding abrupt changes in data when a property of the time series changes" (\cite{Samaneh2016}). In the domain of (continuous) benchmarking, change point detection can be used as a tool to determine points at which a performance regression (or improvement) occurs. With this regard, the performance of a system throughout different commits can be interpreted as a series of time-ordered series, which represents the underlying signal that is analyzed by a chnge-point detection algorithm (See \cite{daly2020} p. 69)
+
 	\subsection{E-Divisive Means}
 	\label{ssec:cp_edivisive}
 
