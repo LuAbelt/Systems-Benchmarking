@@ -251,6 +251,24 @@ In this section a technique that will further be reffered to as \textit{Continuo
 
 	\subsection{E-Divisive Means}
 	\label{ssec:cp_edivisive}
+	One algorithm for detecting change points is the E-Divisive Means algorithm. In contrast to other change point detection algorithms it offers a few benefits decribed by Daly et al. (See \cite{daly2020} p. 69):
+	
+	\begin{itemize}
+		\item No distributional assumptions required
+		\item Can identify multiple change points using recursion
+		\item Does noit require training data
+	\end{itemize}
+
+	The algorithm is based on hierachically dividing the given time-series into multiple clusters. The recursive approach can be summarized in three steps:
+	\begin{enumerate}
+		\item For each point in the time series calculate a statistic $\hat{Q}$
+		\item Select the largest $\hat{Q}$ as the next change point
+		\item This divides the time series into two new clusters
+	\end{enumerate}
+
+	The termination of the algorithm for a specific cluster is determined by repeating the above steps on a random permutation of the input cluster data. If then the highest $\hat{Q}$ value does not significantly changes it is likely that the series does not contain a relevant change point.
+
+	Within this paper the readily available python package implemented by engineers of MongoDB will be used\footnote{TODO: Link to GitHub}. A broad overview of the algorithm that includes the exact calculation of $\hat{Q}$ is described by the work of Daly et al. (\cite{daly2020} p. 69) while an in depth description of the algorithm is given in the original paper by Matteson and James (\cite{Matteson2014}).
 
 \section{Experiment}
 In this chapter we will further elaborate on the experiment that was conducted. The chapter will give an overview over the general experiment idea and it's goals, the experiment setup and the specific results that were achieved in the experiment runs. An in-depth analysis and evaluation of the experiment results is performed in \autoref{sec:exp_evaluation}
@@ -339,9 +357,12 @@ For the performance change detection up to three different approaches to compare
 
 \section{Evaluation of Performance Results}
 \label{sec:exp_evaluation}
+
 \section{Reflection}
 
-\section{Future Work}
+\section{Related Work}
+
+\section{Conclusion}
 	
 	%*********************************************************************%
 	% APPENDIX                                                            %
