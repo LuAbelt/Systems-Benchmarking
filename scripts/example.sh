@@ -2,9 +2,8 @@
 #SBATCH --job-name=testjob-luabelt
 #SBATCH --output=/scratch/abeltluk/slurm_logs/slurm_log_%j.out
 #SBATCH --time=10:00
-#SBATCH --constraint=eku
+#SBATCH --constraint=kine
 #SBATCH --partition=seminar
 
 srun sleep 10
-srun echo Hello from $(hostname)
-
+srun lscpu > /scratch/abeltluk/lscpu

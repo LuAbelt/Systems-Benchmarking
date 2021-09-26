@@ -17,7 +17,8 @@ RESULT_FILE=$BENCH_BASE_DIR/results/$RELEASE.res
 TIMINGS_FILE=$BENCH_BASE_DIR/results/$RELEASE.timings
 
 # Setup environment
-mkdir $WORKING_DIR
+mkdir -p $WORKING_DIR
+mkdir -p $BENCH_BASE_DIR/results
 cd $WORKING_DIR
 
 # Copy LZBench and LZ4 from base
@@ -41,7 +42,7 @@ make
 
 cd $WORKING_DIR
 # Run lzbench 
-./lzbench/lzbench -elz4 -i100,100 -p3 -j -r -o4 -v silesia > $RESULT_FILE
+./lzbench/lzbench -elz4 -t60,60 -p3 -j -r -o4 -v silesia > $RESULT_FILE
 
 # Cleanup
 cd $USER_BASE_DIR

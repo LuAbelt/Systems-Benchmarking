@@ -13,7 +13,7 @@ USER_BASE_DIR=/scratch/$USER
 RELEASES_FILE=$USER_BASE_DIR/SystemsBenchmarking/benchmark/lz4commits
 
 RELEASES_LIST=($(<$RELEASES_FILE))
-BENCH_BASE_DIR=$USER_BASE_DIR/SystemsBenchmarking/commit_benchmark
+BENCH_BASE_DIR=$USER_BASE_DIR/SystemsBenchmarking/commit_benchmark/mintime
 
 PER_TASK=50
 START_NUM=$(( $SLURM_ARRAY_TASK_ID * $PER_TASK ))
