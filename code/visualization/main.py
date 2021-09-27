@@ -7,36 +7,47 @@ import numpy.random
 
 
 def plot_release_data():
-    release_res_dir = "../../release_benchmark/mintime/results"
+    release_res_dir = "../../release_benchmark/lz4hc/results"
     labels = []
-    compression_speed = []
-    decompression_speed = []
+    compression_speed = dict()
+    decompression_speed = dict()
 
     for filename in os.listdir(release_res_dir):
+        if filename.endswith(".timings"):
+            continue
         with open(os.path.join(release_res_dir, filename)) as res_file:
             labels.append(filename.strip(".res"))
             reader = csv.reader(res_file)
+            # Skip headers and memcpy line
             next(reader)
             next(reader)
-            line = next(reader)
-            compression_speed.append(float(line[1]))
-            decompression_speed.append(float(line[2]))
+            for line in reader:
+                try:
+                    compression_speed[line[0]].append(float(line[1]))
+                    decompression_speed[line[0]].append(float(line[2]))
+                except KeyError:
+                    compression_speed[line[0]] = [float(line[1])]
+                    decompression_speed[line[0]] = [float(line[2])]
 
-    decompression_speed.sort(key=dict(zip(decompression_speed,labels)).get)
-    compression_speed.sort(key=dict(zip(compression_speed,labels)).get)
-    labels.sort()
+    plt.xticks(rotation=90)
+    sorted_labels = sorted(labels)
 
-    plt.plot(labels, decompression_speed,label="Decompression speed",color="orange")
+    for compressor in compression_speed:
+        comp_data_series = compression_speed[compressor]
+        comp_data_series.sort(key=dict(zip(comp_data_series, labels)).get)
+        plt.plot(sorted_labels, comp_data_series, label=f"Compression speed {compressor}")
+
+        # decomp_data_series = decompression_speed[compressor]
+        # decomp_data_series.sort(key=dict(zip(decomp_data_series, labels)).get)
+        # plt.plot(labels, decomp_data_series, label=f"Decompression speed {compressor}")
+
     plt.ylabel('MB/s')
     plt.xlabel("Version")
-    plt.ylim([0, 4000.0])
-    plt.xticks(rotation=90)
-
-    #plt.clf()
-    plt.plot(labels, compression_speed, label="Compression speed")
+    plt.ylim([0, 150.0])
     plt.legend()
     plt.tight_layout()
-    plt.savefig("releases_plot.png")
+    #plt.show()
+    plt.savefig("test.png")
 
 
 def plot_commit_data():
@@ -111,6 +122,6 @@ def create_changepoint():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    plot_commit_data()
+    plot_release_data()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
