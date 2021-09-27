@@ -352,12 +352,49 @@ The benchmark itself will be performed on the Cluster Infrastructure of the Soft
 
 For the performance change detection up to three different approaches to compare the benchmarking data will be presented. Based on the results of these approaches the questions posed in \autoref{ssec:exp_goals} will be evaluated and compared. The approaches used are defined in detail in \autoref{sec:exp_evaluation}.
 
-	\subsection{Experiment Results}
+	\subsection{Experiment Implementation and Results}
 
-\section{Evaluation of Performance Results}
+	The benchmark was implemented using a few simple bash scripts that perform an lzbench run on a given list of commits. The benchmark script copies all source files required for building lzbench to a separate build directory. It then checks out the given commit of lz4 and overwrites the lz4 specific files in the lzbench directory. This custom built lzbench version is then used to run the benchmark. All code that was used to perform this benchmark can be found on GitHub (\cite{TODO}).
+
+	\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=0.8\textwidth]{outlier}
+		\caption{Compression- and Decompression speeds throughout the release history}
+		\label{fig:release-bench}
+	\end{figure}
+
+	As described in the previous section the benchmark was first performed on all versioned releases in the Git repository. The results of this initial run are shown in \autoref{fig:release-bench}. It can be observed that throughout the release history the compression speed stayed relatively consistent. For the decompression speed however, multiple performance increases can be observed throughout the release history. \autoref{tab:rel-speedup} shows the relative speedup between the individual versions.
+
+	\begin{table}
+		\caption{Relative speedup between lz4 releases}
+		\label{tab:rel-speedup}
+	\end{table}
+
+	Based on these results the commit range between \textit{v1.8.1} and \textit{v1.8.2} was selected as the commit range for a more thorough and detailled analysis. The results of this analysis are further discussed in \autoref{sec:exp_evaluation}. However as the data for the lz4 benchmark only indicated a performance improvement and the goal of this work is to evaluate the detection both performance improvements and regressions, the release benchmarks were repeated with the \texttt{lz4hc} compression algorithm. The \texttt{lz4hc} implementation is a variant of the \texttt{lz4} implementation that features a higher compression rate at the cost of lower compression speed. As \texttt{lz4hc} is also included in the same source code as \texttt{lz4} the only adaption required to the benchmark was to replace the compression algorithm used in the command line parameters passed.
+
+	\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=0.8\textwidth]{outlier}
+		\caption{Compression- and Decompression speeds throughout the release history of lz4hc}
+		\label{fig:release-bench}
+	\end{figure}
+
+
+\section{Evaluation of Commit Benchmark Results}
 \label{sec:exp_evaluation}
 
+
+
 \section{Reflection}
+In this section the results of this work are critically reflected upon. A focus is put onto the quality of the benchmark experiment ran. Additionally the shortcomings of the approach used will be discussed to identify potential future work that could extend this work.
+
+\subsection{Quality of the Benchmarking Experiment}
+
+
+
+\subsection{Shortcomings}
+
+\subsection{Future Work}
 
 \section{Related Work}
 
