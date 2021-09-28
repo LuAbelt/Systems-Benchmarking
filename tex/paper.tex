@@ -131,7 +131,7 @@ In Fixed-Time benchmarks, instead of fixing the amount of work $W_i$, the time $
 Additionally there are also further approaches that does not employ fixed time or work at all, but rather employ variable-time and -work characteristics. For this case the metric is a function of the time $T$ and the work $W$. While this technique provides maximum flexibility, this approach is not suitable for all types of benchmarks (See \cite{Kounev} p. 12)
 
 \subsection{Evaluating Benchmarks}
-
+\label{ssec:eval_bm}
 Apart from the metrics that evaluate the result of a benchmark, there are also several attributes that are important to evaluate the quality of the benchmark itself. The designer of a benchmark should always take these attributes into consideration when creating a benchmark. As described by Skadron et al. it is not possible to create a single benchmark that covers all these attributes perfectly. Therefore one either has to create multiple benchmarks that complement each others weaknesses or choose to sacrifice one of these attributes over the other (\cite{Skadron2003} p. 32f).
 
 Over the years, researchers and industry associates alike have defined several criteria that are considered desirable by modern standards. Often the exact terminology of these criteria differs based on authors and the specific application domain, however the concepts in general are similar. Kounev at al. list five core criteria that will be defined in a little more detail in this chapter (\cite{Kounev} p. 13f). A much more in depth discussion of these criteria was performed by Kistowski et al. (See \cite{kistowski2015})
@@ -392,29 +392,167 @@ For the performance change detection up to three different approaches to compare
 
 \section{Evaluation of Commit Benchmark Results}
 \label{sec:exp_evaluation}
+This chapter will cover a more thorough analysis of the performance benchmark performed on the identified commit ranges in the previous chapter. Specifically it will compare three algorithms that can be used to detect performance changes and tries to evaluate them. 
+
 
 \subsection{Reviewing the Performance Benchmark Data}
--Baseline: E-Divisive Means
--Mention Performance Spike
+Before applying automated analysis methods to the data gathered, a manual evaluation of the data gathered from the performance benchmark was conducted. The data gathered for the decompression speed from the \texttt{lz4} benchmark is shown in \autoref{fig:lz4_commit_bench}, while the compression speed data gathered from from the \texttt{lz4hc} benchmark can be seen in \autoref{fig:lz4hc_commit_bench}.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{graph/lz4_commits_decompression}
+	\caption{Decompression speed of \texttt{lz4} between releases \textit{v1.8.1} and \textit{v1.8.2}}
+	\label{fig:lz4_commit_bench}
+\end{figure}
+
+For the analysis of \texttt{lz4} data there are a few key observation that we made while evaluating the data manually. First of all, it seems that there are at least two general "performance levels" that can be observed from the data: While the majority of the data lies around a speed of 2200 MB/s in the end we see a clear improvement to a level of around 2400 MB/s. We also see that at the very beginning and near the end two more steep increases can be oberseved. However as we are missing the data before and after these benchmarks we cannot rule them out to just be outliers in the dataset. Therefore we do not consider these as additional performance levels.
+
+Another observation that we made were the intense performance increases that can be observed throughout the data series that peak to around 2900 MB/s. While manually reviewing the code changes in the corresponding code commits we could not find any connection to the code changes made that would cause such a spike in the decompression speed nor did we find any evidence of changes being reverted in the following commits that would cause the performance to return to the previous level. This observation will be further discussed in \autoref{ssec:refl_quality} and \autoref{ssec:refl_shortcomings}.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{graph/lz4hc_commits_compression}
+	\caption{Decompression speed of \texttt{lz4hc} between releases \textit{v1.8.0} and \textit{v1.8.1}}
+	\label{fig:lz4hc_commit_bench}
+\end{figure}
+
+For the data observed for the \texttt{lz4hc} benchmark the data observed does not draw such a clear picture as for the \texttt{lz4} one. From our perspective only one clear change point can be directly observed for the performance drop near the end. Before that there is a lot of fluctuation in the data. One can observe a few short plateaus emerging in the performance data before that, however we cannot decide if these are just effects of random noise or actual relevant performance changes.
 
 \subsection{Comparing Methods to Detect Performance Changes}
--E-Divisive Means
--Jump Detection
--Trend Detection
+After manually reviewing the data we performed a programmatic evaluation of the data with three different methods. Apart from the E-Divisive means algorithm that was already discussed in \autoref{ssec:cp_edivisive}, we will use two more algorithms that were also evaluated by Grambow et al. (See \cite{grambow2019}):
 
-Swiftness of detection w/ all three
+\paragraph{Jump Detection}: This approach performs a relative comparison of the benchmarking data from the current commit to the one right before it. If they diverge by more than a defined percentage, the performance change will be flagged. In our evaluation we used a threshold of 5\%.
+
+\paragraph{Trend Detection}: For trend detection we do not compare the current data to the value of the previous commit but rather we compare it to a moving average of the last $b$ commits. Then similarly to jump detection we check the relative change to this and flag this. For our evaluation we used $b=10$ and similar to jump detection a threshold of 5\%.
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c||c|c|c|}
+		\hline
+		\textbf{Benchmark}&\textbf{Jump Detection}&\textbf{Trend Detection}&\textbf{E-Divisive Means}
+		\\\hline\hline
+		\texttt{lz4}&24&27&4
+		\\\hline
+		\texttt{lz4hc}&23&43&3
+		\\\hline
+	\end{tabular}
+	\caption{Overview of changes detected by the different methods}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c||c|c|c|}
+		\hline
+		\textbf{Benchmark}&\textbf{Jump Detection}&\textbf{Trend Detection}&\textbf{E-Divisive Means}
+		\\\hline\hline
+		\texttt{lz4}&24&27&4
+		\\\hline
+		\texttt{lz4hc}&23&43&3
+		\\\hline
+	\end{tabular}
+	\caption{Overview of changes detected by the different methods}
+\end{table}
+After applying these techniques we observed that they differ vastly in the amount of supposed performance changes that they detect. In \autoref{tab:perf_changes} we list how many performance changes were detected for each technique, while \autoref{fig:perf_commit_cp} shows a visual representation of the change points in the datasets.
+
+
+\begin{figure}[ht!]
+	\centering
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{graph/lz4_commit_e-divisive}
+		\caption{\texttt{lz4} using E-Divisive Means}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{graph/lz4_commit_jump}
+		\caption{\texttt{lz4} using Jump Detection}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{graph/lz4_commit_trend}
+		\caption{\texttt{lz4} using Trend Detection}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{graph/lz4hc_commit_e-divisive}
+		\caption{\texttt{lz4hc} using E-Divisive Means}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{graph/lz4hc_commit_jump}
+		\caption{\texttt{lz4hc} using Jump Detection}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{graph/lz4hc_commit_trend}
+		\caption{\texttt{lz4hc} using Trend Detection}
+	\end{subfigure}
+	\caption{Graphical representation of all change detections on the both datasets}
+	\label{fig:}
+\end{figure}
+
+Surprisingly for us, for both datasets the trend detection flagged the most commits as a performance change. We initially expected that because of the many outliers in our dataset that jump detection would flag the most commits as for every outlier two commits would be flagged -- the outlier and the commit right after that. By far the fewest commits were flagged as changes buy the E-Divisive Means algorithm. To our surprise E-Divisive for the \texttt{lz4} algorithm flagged two additional change points with a relatively small overall performance change that we missed in our manual review. While it is impressive that E-Divisive Mean can detect such changes it is a matter of application domain whether detecting such changes is desirable or if further parameters of the algorithm needs to be tuned.
+
+One more aspect we wanted to evaluate was how quickly these techniques can be detect a performance change after it has occured. While our experiment retroactively looks for change points, we are more interested how and if such techniques can be used to find performance changes while they are introduced.
+
+Intuitively by the nature of Jump Detection it can detect a performance change immediately after it occurs. For trend detection a change can be observed anywhere within the moving average that is given and therefore the detection time depends on the defined parameters.
+
+As E-Divisive means is a different and much more sophisticated change point detection algorithm as the other two evaluating when a change will be detected is not as trivial. However as E-Divisive means specifically only detects change points and not outliers, it will never flag the latest commit as a performance change as this could very well be the result of an outlier.
+
+To evaluate how quickly a performance change is detected by E-Divisive Means, we use the data we gather to retroactively "simulate" an ongoing continuous benchmarking approach. That is we iteratively add one commit by one to the time series and therefore find the first occurence of the change points identified in our final time series. The results of this evaluation are shown in \autoref{tab:ediv_occ}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c||c|c|c|}
+		\hline
+		\textbf{Dataset}&\textbf{Change Point Commit\#}&\textbf{First detected at Commit \#}&\textbf{$\Delta$}
+		\\\hline\hline
+		\texttt{lz4}&3&7&4
+		\\\hline
+		\texttt{lz4}&52&64&12
+		\\\hline
+		\texttt{lz4}&251&287&31
+		\\\hline
+		\texttt{lz4}&313&316&6
+		\\\hline
+		\texttt{lz4hc}&36&37&1
+		\\\hline
+		\texttt{lz4hc}&104&122&18
+		\\\hline
+		\texttt{lz4hc}&122&123&1
+		\\\hline
+	\end{tabular}
+	\caption{Overview of changes detected by the different methods}
+\end{table}
+
+So for our example, E-Divisive Means detects the changes relatively quich in most cases. When reviewing these commits by hand we found that the biggest time difference was about four weeks until the change point got detected (Between commit 104 and 122 for \texttt{lz4hc}). For most of the other change points it was only a few days until the detection. Whether or not a detection time of four weeks is acceptable is heavily project dependent and cannot be answered by us generically.
 
 \subsection{Conclusion}
-benefits/problems of each detection method
+We believe that all three algorithms presented in this chapter offer useful properties for certain application with respect to detecting performance changes. However when it comes to reliably detecting performance changes throughout the development, we believe that E-Divisive Means stands out against the other two. Jump Detection is neturally prone to noisy signals while for trend detection we observed a fairly poor performance on bi-modal data as we partly oberseved it in our \texttt{lz4} dataset.
 
+However also E-Divisive means has its drawbacks that should be considered before implementing it: For a reliable and vast change detection one needs to regularly benchmark the \gls{sut}, optimally after every code change. In practice this might not be viable. Also we observed that it flags even smaller performance changes which might not desirable. Lastly depending on the performance data it might take some time for the algorithm to identify a change point. However for this last point one needs to consider that E-Divisive Means still identifies the exact point where a performance change was introduced which potentially reduces the amount to find the corresponding code change by far.
 
 \section{Reflection}
 In this section the results of this work are critically reflected upon. A focus is put onto the quality of the benchmark experiment ran. Additionally the shortcomings of the approach used will be discussed to identify potential future work that could extend this work.
 
 	\subsection{Quality of the Benchmarking Experiment}
+	\label{ssec:refl_quality}
+	In this chapter we will focus on the quality of our benchmarking experiment we conducted. We will hereby evaluate each of the five quality attributes that were already mentioned in \autoref{ssec:eval_bm}.
 
+	\paragraph{Relevance} -- We believe that this aspect has to be viewed from two different angles. The first one would be, how relevant the benchmark is in terms of detecting performance changes in the \texttt{lz4} software. In this regard we believe that this benchmark certainly provides a specific relevance as we have shown with different techniques how to retroactively identify performance changes in the software.
+
+	The other aspect however, is how relevant the results of our experiment are to our overarching question: "Should we benchmark software only before releases or after every commit". For this we believe our benchmark has only a limited relevance. The main reason for this is that our experiment only covered a really simplified and streamlined example. For the example of \texttt{lz4} performing a benchmark after every commit might be feasible; However our benchmark did not at all consider the dimension of modern software systems such as configurability which makes this approach unfeasible for most potential use-cases.
+
+\paragraph{Reproducibility} -- As all code artifact that have been used to perform this benchmark have been documented in a GitHub repository. A third-party could use these in addition to the information given in this paper regrding the hardware configuration to closely reproduce the results.
+
+\paragraph{Fairness} -- As for fairness there are a few things to critisize. Our benchmark is completely created artificially and is overly simplistic by nature. Therefore the fairness of our benchmarking approach could be questionable.
+
+\paragraph{Verifiability} -- In terms of verifiability, our benchmark ensures that only a predefined software configuration is used. However our benchmark only copies the build files from an existing directory on the users hardware and does not validade if any unexpected changes have been made. In an extended approach we would rather consider the code to be cloned directly from a public Git repository, preferably with a specific commit defined.
+
+Additionally our detailled experiment contained some outliers that we could not explain based on our findings. We now believe that this might be an error in our benchmarking approach as firstly, the achieved performance results are closely to those from recent \texttt{lz4} versions. Additionally when repeating the benchmark on a smaller subset, we could not reliably reproduce these results. Unfortunately in the timeframe of this seminar we could not identify the exact cause of this.
+
+\paragraph{Usability} -- In terms of usability, we believe that our benchmark is, at most to a certain extent, quite usable. While we used a compute cluster to run multiple benchmarks in parallel we believe that comparable results could also be reproduced by just using one local machine.
 
 	\subsection{Shortcomings}
+	\label{ssec:refl_shortcomings}
+	Question not fully answered
+	Problems in experiment setup
+	Not usable for complex software systems
+	Applicability in practice of E-Divisive
 
 	\subsection{Future Work}
 
