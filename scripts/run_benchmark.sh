@@ -67,7 +67,8 @@ date +%s%N >> $TIMINGS_FILE
 
 cd $WORKING_DIR
 # Run lzbench 
-./lzbench/lzbench -elz4/lz4hc -t60,60 -p3 -j -r -o4 -v silesia > $RESULT_FILE
+#./lzbench/lzbench -elz4/lz4hc -t60,60 -p3 -j -r -o4 -v silesia > $RESULT_FILE
+./lzbench/lzbench -elz4hc,1 -t60,60 -p3 -j -r -o4 -v silesia > $RESULT_FILE
 
 # Timing
 date +%s%N >> $TIMINGS_FILE
