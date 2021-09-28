@@ -232,12 +232,12 @@ In this section a technique that will further be referred to as \textit{Continuo
 		\centering
 		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
-			\includegraphics[width=\textwidth]{outlier}
+			\includegraphics[width=\textwidth]{graph/outlier}
 			\caption{Visualization of an outlier}
 		\end{subfigure}
 		\begin{subfigure}[b]{0.45\textwidth}
 			\centering
-			\includegraphics[width=\textwidth]{changepoint}
+			\includegraphics[width=\textwidth]{graph/changepoint}
 			\caption{Visualization of a change point}
 		\end{subfigure}
 		\caption{Visual difference of an outlier and a change point}
@@ -358,7 +358,7 @@ For the performance change detection up to three different approaches to compare
 
 	\begin{figure}[ht!]
 		\centering
-		\includegraphics[width=0.8\textwidth]{outlier}
+		\includegraphics[width=0.8\textwidth]{graph/lz4_releases_plot}
 		\caption{Compression- and Decompression speeds throughout the release history}
 		\label{fig:release-bench}
 	\end{figure}
@@ -374,12 +374,21 @@ For the performance change detection up to three different approaches to compare
 
 	\begin{figure}[ht!]
 		\centering
-		\includegraphics[width=0.8\textwidth]{outlier}
-		\caption{Compression- and Decompression speeds throughout the release history of lz4hc}
-		\label{fig:release-bench}
+		\begin{subfigure}[b]{0.45\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{graph/lz4hc_release_compression}
+			\caption{Compression speed of \texttt{lz4hc} releases}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.45\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{graph/lz4hc_release_decompression}
+			\caption{Decompression speed of \texttt{lz4hc} releases}
+		\end{subfigure}
+		\caption{Compression and Decompression speeds of \texttt{lz4hc} releases}
+		\label{fig:release-bench-lz4hc}
 	\end{figure}
 
-	Based on these results, it can be seen that there is a significant performance regression between versions \textit{v1.8.0} and \textit{v1.8.1}. Therefore this commit range was also selected for further investigation of the individual commits.
+	While the graph for the decompression speed is similar to the one for the normal \texttt{lz4} algorithm, for the compression speed a significant performance regression can be observed between versions \textit{v1.8.0} and \textit{v1.8.1}. Therefore this commit range was also selected for further investigation of the individual commits.
 
 \section{Evaluation of Commit Benchmark Results}
 \label{sec:exp_evaluation}
