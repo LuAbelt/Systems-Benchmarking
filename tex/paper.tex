@@ -287,7 +287,7 @@ In this chapter we will further elaborate on the experiment that was conducted. 
 				\item Complexity of implementation?
 				\item Reliably detecting performance changes?
 				\item Reducing the amount of manual work required by the developer?
-				\item Can we use this metric to compare arbitrary commits?
+				\item Can we use this metric to compare arbitrary commits? TODO: Maybe remove
 			\end{itemize}
 	\end{itemize}
 
@@ -379,22 +379,35 @@ For the performance change detection up to three different approaches to compare
 		\label{fig:release-bench}
 	\end{figure}
 
+	Based on these results, it can be seen that there is a significant performance regression between versions \textit{v1.8.0} and \textit{v1.8.1}. Therefore this commit range was also selected for further investigation of the individual commits.
 
 \section{Evaluation of Commit Benchmark Results}
 \label{sec:exp_evaluation}
 
+\subsection{Reviewing the Performance Benchmark Data}
+-Baseline: E-Divisive Means
+-Mention Performance Spike
+
+\subsection{Comparing Methods to Detect Performance Changes}
+-E-Divisive Means
+-Jump Detection
+-Trend Detection
+
+Swiftness of detection w/ all three
+
+\subsection{Conclusion}
+benefits/problems of each detection method
 
 
 \section{Reflection}
 In this section the results of this work are critically reflected upon. A focus is put onto the quality of the benchmark experiment ran. Additionally the shortcomings of the approach used will be discussed to identify potential future work that could extend this work.
 
-\subsection{Quality of the Benchmarking Experiment}
+	\subsection{Quality of the Benchmarking Experiment}
 
 
+	\subsection{Shortcomings}
 
-\subsection{Shortcomings}
-
-\subsection{Future Work}
+	\subsection{Future Work}
 
 \section{Related Work}
 
