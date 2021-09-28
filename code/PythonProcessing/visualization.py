@@ -1,6 +1,8 @@
 import csv
 import os
 
+from data_import import import_benchmark_data
+
 import matplotlib.pyplot as plt
 from signal_processing_algorithms.energy_statistics import energy_statistics
 import numpy.random
@@ -8,26 +10,9 @@ import numpy.random
 
 def plot_release_data():
     release_res_dir = "../../release_benchmark/lz4hc/results"
-    labels = []
-    compression_speed = dict()
-    decompression_speed = dict()
+    release_list_file = "../../benchmark/lz4releases"
 
-    for filename in os.listdir(release_res_dir):
-        if filename.endswith(".timings"):
-            continue
-        with open(os.path.join(release_res_dir, filename)) as res_file:
-            labels.append(filename.strip(".res"))
-            reader = csv.reader(res_file)
-            # Skip headers and memcpy line
-            next(reader)
-            next(reader)
-            for line in reader:
-                try:
-                    compression_speed[line[0]].append(float(line[1]))
-                    decompression_speed[line[0]].append(float(line[2]))
-                except KeyError:
-                    compression_speed[line[0]] = [float(line[1])]
-                    decompression_speed[line[0]] = [float(line[2])]
+    compression_speed, decompression_speed, labels = import_benchmark_data(release_list_file,release_res_dir,)
 
     plt.xticks(rotation=90)
     sorted_labels = sorted(labels)
@@ -50,36 +35,22 @@ def plot_release_data():
     plt.ylim([0, 4000.0])
     plt.legend()
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("out/lz4hc_release_decompression.png")
+    plt.show()
+    #plt.savefig("out/lz4hc_release_decompression.png")
 
 
 def plot_commit_data():
     commit_res_dir = "../../commit_benchmark/lz4hc_180_181/results"
     commit_hash_file = "../../benchmark/lz4hc_commits"
-    compression_speed = []
-    decompression_speed = []
-    labels = []
-
-    # with open(commit_hash_file) as hash_file:
-    #     for commit_hash in hash_file:
-    #         if not os.path.isfile(os.path.join(commit_res_dir,commit_hash.strip()+".res")):
-    #             continue
-    #         with open(os.path.join(commit_res_dir,commit_hash.strip()+".res")) as commit_file:
-    #             reader = csv.reader(commit_file)
-    #             labels.append(commit_hash)
-    #             next(reader)
-    #             next(reader)
-    #             line = next(reader)
-    #             compression_speed.append(float(line[1]))
-    #             decompression_speed.append(float(line[2]))
-    #         #print(commit_hash.strip()+".res")
 
     comp_dict, decomp_dict, labels = import_benchmark_data(commit_hash_file,commit_res_dir)
 
+    compression_speed = comp_dict["lz4hc 1.9.2 -1"]
+    decompression_speed = decomp_dict["lz4hc 1.9.2 -1"]
+
     decompression_speed.reverse()
     compression_speed.reverse()
-    #plt.plot(compression_speed, label="Compression Speed (lz4hc)")
+    plt.plot(compression_speed, label="Compression Speed (lz4hc)")
     plt.plot(decompression_speed, label="Decompression Speed (lz4hc)", color="orange")
     plt.ylabel('MB/s')
     plt.xlabel("# of commits since v1.8.0")
@@ -104,9 +75,9 @@ def plot_commit_data():
     plt.tight_layout()
     labels.reverse()
     # print(labels[decompression_speed.index(max(decompression_speed))])
-    # plt.show()
+    plt.show()
 
-    plt.savefig("out/lz4hc_commits_decompression")
+    # plt.savefig("out/lz4hc_commits_decompression")
 
 
 def create_outlier():
