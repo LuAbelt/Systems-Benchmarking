@@ -549,16 +549,35 @@ Additionally our detailled experiment contained some outliers that we could not 
 
 	\subsection{Shortcomings}
 	\label{ssec:refl_shortcomings}
-	Question not fully answered
-	Problems in experiment setup
-	Not usable for complex software systems
-	Applicability in practice of E-Divisive
+	There are several shortcomings of our experiment that can be discussed. First of all we have already discussed that there were some inconsistencies in the data gathered from the experiment. This has caused some, otherwise unexplainable, performance spikes in the data. As we could not reliably reproduce this behavior we believe that there is some issue in our benchmarking pipeline which leads to a wrong version of \texttt{lz4} being used. Therefore, one could argue that it cannot be out ruled that also other data recorded is not flawed in some other unnoticed way.
+
+	Secondly while we have retroactively identified change points using our methodology we have not performed any verification on these. Optimally we should have verified if the change points we identified are actually related to code changes by manually reviewing the corresponding commits in the Git history. This was not done in the scope of this paper due to the limited time available.
+
+	Thirdly our benchmark experiment itself was too simplistic in nature. It gives a broad first overview however we believe that it is generally not transferable to the development of complex software systems.
 
 	\subsection{Future Work}
 
+	To react and further evaluate on the shortcomings identified there are several opportunities for future works that could extend this paper. Most significantly we should focus on fixing the benchmark suite itself such that we can verify the correctness of the data produced.
+
+	Secondly we believe that for future works the focus of the research question should shift a bit. While this work shows that in an optimal scenario one should benchmark every commit, this is not applicable in practive. Therefore the focus should rather shift to find strategies to preemptively select the "correct" commits for benchmarking.
+
+	Lastly we believe that that aspect of configurability needs to be further considered. While we already collected data for two variants of \texttt{lz4}, we did not use it yet to find any collaborations between the data. We believe that exploring possibilities to link performance changes across variants can be very benefitial.
+
 \section{Related Work}
 
+Several similar work has been published regarding continuous performance benchmarking. Both Antz et al. and Waller at al. describe methods how benchmarking can be included into a continuous integration pipeline to enable continuous benchmarking(\cite{}). Additionally Daly desribes in multiple works how a continuous benchmarking approach has been introduced to MongoDB to enable better detection of performance changes.
+
+In the domain of identifying performance changes across different software configurations and variants, Apel et al. present a novel change point detection algorithm that can identify configuration-dependent performance changes while only exploring a small subset of the configuration space (\cite{}).
+
+Multiple works have also been presented to predict performance changes in software based in order to reduce the amount of commits that need to be benchmarked. One of these approaches is \textit{Perphecy} presented by Oliveria et al. (\cite{}). Similarly, Chen et al. present an approach which identifies which predicts which test cases may suffer from performance regressions after a code change(\cite{}).
+
 \section{Conclusion}
+
+In this paper we tried to answer the question whether one should benchmark software only before releases or after every commit. We have explored both possibilities and compared different performance change detection methods. We come to the conclusion that, in an optimal scenario, benchmarking every commit would be the preferrable option.
+
+However we also want to highlight that this paper is based on data from a overly simplistic benchmark and suffers from several shortcomings. Therefore the applicability to productive systems is limited and for most real world systems benchmarking every commit is simply not feasible.
+
+We therefore highlight that further work is required to sufficiently answer the question. Most notably it needs to be explored in which ways the overall number of commits and configurations to benchmark can be reduced while still reliably detecting performance changes.
 	
 	%*********************************************************************%
 	% APPENDIX                                                            %
