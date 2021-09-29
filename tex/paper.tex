@@ -108,45 +108,66 @@ Benchmarks can be classified in a variety of different means. In this section we
 	\item How can a benchmark be performed (Benchmarking strategies)
 \end{enumerate}
 
-In the broadest sense, benchmarks can be divided into competitive and non-competitive benchmarks. The main motivation of competitive benchmarks is hereby the development of standardized quality criteria that can be used to compare different systems. Certain sources also emphasize this importance on the competitiveness by providing a more detailed definition of the term benchmark, i.e. "a standard tool for competitive evaluation and comparison of competitive systems" (\cite{kistowski2015} p. X).
+In the broadest sense, benchmarks can be divided into competitive and non-competitive benchmarks. The main motivation of competitive benchmarks is hereby the development of standardized quality criteria that can be used to compare different systems. Certain sources also emphasize this importance on the competitiveness by providing a more detailed definition of the term benchmark, i.e. "a standard tool for competitive evaluation and comparison of competitive systems" (\cite{kistowski2015} p. 333).
 
 For non-competitive benchmarks Kounev et al. Further distinguish between the two categories of "rating tools" and "research benchmark". Rating tools can serve multiple purposes: Either as a component of an development and system improvement process, as a baseline for regulatory programmes or to serve as common benchmark for research. Research benchmarks on the other hand commonly refer to tools and workloads that may be used for in-depth evaluation of research results, prototypes or productive systems. Based on these descriptions it becomes apparent that there sometimes might be no clear distinction between a rating tool and a research benchmark and the terminology is often determined by the evaluating party (See \cite{Kounev} p. 4).
 
-Regardless of the competitiveness, or lack thereof, of a benchmark the key metrics that are evaluated are often similar or even identical. While historically the main metrics of importance were e.g. security, system reliability and energy efficiency, modern benchmarks also try to cover much more aspects of a software. We will discuss a selection of the quality attributes listed by Kounev et al. that are usually target of modern benchmarks(\cite{Kounev} p. 6 f):
+Regardless of the competitiveness, or lack thereof, of a benchmark the key metrics that are evaluated are often similar or even identical. While historically the main metrics of importance were e.g. security, system reliability and energy efficiency, modern benchmarks also try to cover much more aspects of a software. According to Kounev et al. quality metrics of modern benchmarks are usually(\cite{Kounev} p. 6 f):
+\begin{itemize}
+	\item Performance
+	\item Scalability
+	\item	Energy Efficiency
+	\item Reliability
+\end{itemize}
 
-\paragraph{Performance} The term Performance itself can be interpreted in many different means. For this paper, we will focus on one of the most basic interpretations: The amount of work done compared to the time and resources used. A much more in-depth explanation of different performance measures is given by Kounev et al. (See \cite{Kounev} p. 49 ff)
+%\paragraph{Performance} The term Performance itself can be interpreted in many different means. For this paper, we will focus on one of the most basic interpretations: The amount of work done compared to the time and resources used. A much more in-depth explanation of different performance measures is given by Kounev et al. (See \cite{Kounev} p. 49 ff)
 
-\paragraph{Scalability} TODO Definition needed
+%\paragraph{Scalability} TODO Definition needed
 
-\paragraph{Energy Efficiency} TODO Definition needed
+%\paragraph{Energy Efficiency} TODO Definition needed
 
-\paragraph{Reliability} TODO Definition needed
+%\paragraph{Reliability} TODO Definition needed
 
-When it comes to benchmarking strategies two approaches are most prominent: Fixed-Time and Fixed-Work benchmarks. A Fixed-Work Benchmark here describes the most intuitive approach for benchmarking: We fix a specified amount of work $W_i$ and measure the required time $T_i$ that is required to fulfil this work.
+In terms of benchmarking strategies three general approaches can be distinguished:
+\begin{enumerate}
+	\item Fixed-Time Benchmarks
+	\item Fixed-Work Benchmarks
+	\item Variable Time- and Work-Benchmarks
+\end{enumerate}
 
-While Fixed-Work benchmarks are easy to understand and implement, it introduces an implicit performance bottleneck that is also known as \textit{Amdahl's Law}. It states that the maximum possible performance improvement that can be achieved in Fixed-Work Benchmarks is upper-bounded by the fraction of work that is performed by the component that is being improved (See \cite{Kounev} p. 9f).
+All of these offer there own benefits, drawbacks and specific use-cases. These are discussed in detail by Kounev et al.(\cite{Kounev} p. 9ff)
 
-In Fixed-Time benchmarks, instead of fixing the amount of work $W_i$, the time $T_i$ is bound and the amount of work finished in this time is measured as a metric. As opposed to Fixed-Work Benchmarks the Fixed-Time Benchmarks do not suffer the issue of an upper-bounded maximum improvement as for every improvement, the reduced time can be used to process further work units (See \cite{Kounev} p. 11).
+%When it comes to benchmarking strategies two approaches are most prominent: Fixed-Time and Fixed-Work benchmarks. A Fixed-Work Benchmark here describes the most intuitive approach for benchmarking: We fix a specified amount of work $W_i$ and measure the required time $T_i$ that is required to fulfil this work.
 
-Additionally there are also further approaches that does not employ fixed time or work at all, but rather employ variable-time and -work characteristics. For this case the metric is a function of the time $T$ and the work $W$. While this technique provides maximum flexibility, this approach is not suitable for all types of benchmarks (See \cite{Kounev} p. 12)
+%While Fixed-Work benchmarks are easy to understand and implement, it introduces an implicit performance bottleneck that is also known as \textit{Amdahl's Law}. It states that the maximum possible performance improvement that can be achieved in Fixed-Work Benchmarks is upper-bounded by the fraction of work that is performed by the component that is being improved (See \cite{Kounev} p. 9f).
+
+%In Fixed-Time benchmarks, instead of fixing the amount of work $W_i$, the time $T_i$ is bound and the amount of work finished in this time is measured as a metric. As opposed to Fixed-Work Benchmarks the Fixed-Time Benchmarks do not suffer the issue of an upper-bounded maximum improvement as for every improvement, the reduced time can be used to process further work units (See \cite{Kounev} p. 11).
+
+%Additionally there are also further approaches that does not employ fixed time or work at all, but rather employ variable-time and -work characteristics. For this case the metric is a function of the time $T$ and the work $W$. While this technique provides maximum flexibility, this approach is not suitable for all types of benchmarks (See \cite{Kounev} p. 12)
 
 \subsection{Evaluating Benchmarks}
 \label{ssec:eval_bm}
 Apart from the metrics that evaluate the result of a benchmark, there are also several attributes that are important to evaluate the quality of the benchmark itself. The designer of a benchmark should always take these attributes into consideration when creating a benchmark. As described by Skadron et al. it is not possible to create a single benchmark that covers all these attributes perfectly. Therefore one either has to create multiple benchmarks that complement each others weaknesses or choose to sacrifice one of these attributes over the other (\cite{Skadron2003} p. 32f).
 
-Over the years, researchers and industry associates alike have defined several criteria that are considered desirable by modern standards. Often the exact terminology of these criteria differs based on authors and the specific application domain, however the concepts in general are similar. Kounev at al. list five core criteria that will be defined in a little more detail in this chapter (\cite{Kounev} p. 13f). A much more in depth discussion of these criteria was performed by Kistowski et al. (See \cite{kistowski2015})
+Over the years, researchers and industry associates alike have defined several criteria that are considered desirable by modern standards. Often the exact terminology of these criteria differs based on authors and the specific application domain, however the concepts in general are similar. Kounev at al. list five core criteria that are generally of interest(\cite{Kounev} p. 13f). A much more in depth discussion of these criteria was performed by Kistowski et al. (See \cite{kistowski2015})
+\begin{itemize}
+	\item Relevance
+	\item Reproducibility
+	\item Fairness
+	\item Verifiability
+	\item Usability
+\end{itemize}
+%\paragraph{Relevance} For a benchmark to be meaningful it is important that it, at least to a certain extent, reproduces some scenarios with real world application. This is what the "Relevance" of a benchmark refers to. It tries to define how relevant the produced information is to a potential user of a software. According to Kistowski et al. this makes it "perhaps the most important characteristic" (\cite{kistowski2015} p. 334). However the relevance of a benchmark may also limits the benchmarks applicability meaning, that a highly relevant benchmark for a specific system or component might only narrow applicability while benchmarks with a broad applicability will have a lower relevance but for a wider selection of applications. Kistowski et al. further elaborate on this with specific examples (\cite{kistowski2015} p. 334f)
 
-\paragraph{Relevance} For a benchmark to be meaningful it is important that it, at least to a certain extent, reproduces some scenarios with real world application. This is what the "Relevance" of a benchmark refers to. It tries to define how relevant the produced information is to a potential user of a software. According to Kistowski et al. this makes it "perhaps the most important characteristic" (\cite{kistowski2015} p. 334). However the relevance of a benchmark may also limits the benchmarks applicability meaning, that a highly relevant benchmark for a specific system or component might only narrow applicability while benchmarks with a broad applicability will have a lower relevance but for a wider selection of applications. Kistowski et al. further elaborate on this with specific examples (\cite{kistowski2015} p. 334f)
+%\paragraph{Reproducibility} Reproducibility ensures that it is possible for a third party to produce ideally the same results for a given test environment. Reproducibility covers both the consistency between multiple runs on the same system as well as creating the same results on another environment with a semantically equivalent configuration. 
 
-\paragraph{Reproducibility} Reproducibility ensures that it is possible for a third party to produce ideally the same results for a given test environment. Reproducibility covers both the consistency between multiple runs on the same system as well as creating the same results on another environment with a semantically equivalent configuration. 
+%However, with modern hard- and software systems, optimal reproducibility has become challenging. For both hard- and software there are several factors that induce variability. From a hardware side things such as the physical disc layout or network connections may affect benchmarking results. For software systems the causes for variability stem from various different sources. from a low-level perspective, things such as thread scheduling can influence the benchmark results. From a higher level perspective a benchmark has to consider the configurability of a software system itself. Modern software systems often offer lots of different configuration options which can be used to create a tailor made system-variant. En- or disabling a specific feature might heavily influence the performance of a benchmark.
 
-However, with modern hard- and software systems, optimal reproducibility has become challenging. For both hard- and software there are several factors that induce variability. From a hardware side things such as the physical disc layout or network connections may affect benchmarking results. For software systems the causes for variability stem from various different sources. from a low-level perspective, things such as thread scheduling can influence the benchmark results. From a higher level perspective a benchmark has to consider the configurability of a software system itself. Modern software systems often offer lots of different configuration options which can be used to create a tailor made system-variant. En- or disabling a specific feature might heavily influence the performance of a benchmark.
+%According to Huppler, an ideal benchmark result should be definable as a function of a hard- and software configuration (See \cite{huppler2009} p. 335). However for real-world applications, modelling such a function is far too complex which requires the benchmark designer to try to model reproducibility in other ways. In the end the reproducibility of a benchmark is heavily dependent on the ability to reproduce the benchmarking environment that was used to create this specific benchmark. 
 
-According to Huppler, an ideal benchmark result should be definable as a function of a hard- and software configuration (See \cite{huppler2009} p. 335). However for real-world applications, modelling such a function is far too complex which requires the benchmark designer to try to model reproducibility in other ways. In the end the reproducibility of a benchmark is heavily dependent on the ability to reproduce the benchmarking environment that was used to create this specific benchmark. 
-
-\paragraph{Fairness} TODO: Short explanation
-\paragraph{Verifiability} TODO: Short explanation
-\paragraph{Usability} TODO: Short explanation
+%\paragraph{Fairness} TODO: Short explanation
+%\paragraph{Verifiability} TODO: Short explanation
+%\paragraph{Usability} TODO: Short explanation
 
 \section{Using Benchmarks to Detect Performance Changes}
 \label{sec:bench_perf_changes}
@@ -188,13 +209,11 @@ According to Huppler, an ideal benchmark result should be definable as a functio
 
 	However this approach also bears various challenges that need to be considered in the development of modern software systems. Daly describes two main challenges that arose when using this approach in the development of MongoDB: Firstly it is possible that test from the last release cycle are simply not reproducible with the current software, secondly identifying the exact change that introduced a performance regression poses challenging (\cite{daly2021} p. 1f).
 
-	Both of these challenges are heavily influenced by the length of software release cycles and the resulting amount of commits throughout one cycle. As an example one can take a look at a few open-source repositories. The C++ test framework \textit{googletest}\footnote{See \url{https://github.com/google/googletest}} by Google with it's most recent release (\textit{1.11.0}) in June 2021, while the last release before that (\textit{1.10.0}) was released in October 2019. During this period of 28 months roughly 700 commits have been added to the repository. Similarly for the C implementation of the \texttt{lz4} compression algorithm that can be found on GitHub\footnote{\url{https://github.com/lz4/lz4}} in the 15 months between the two most recent releases about 250 commits have been added to the code.
+	Both of these challenges are heavily influenced by the length of software release cycles and the resulting amount of commits throughout one cycle. As an example one can take a look at a few open-source repositories. The C++ test framework \textit{googletest} (\cite{gtest}) by Google with it's most recent release (\textit{1.11.0}) in June 2021, while the last release before that (\textit{1.10.0}) was released in October 2019. During this period of 28 months roughly 700 commits have been added to the repository. Similarly for the C implementation of the \texttt{lz4} compression algorithm that can be found on GitHub (\cite{gitlz4}) in the 15 months between the two most recent releases about 250 commits have been added to the code.
 
 	This can also be observed in commercially used software such as MongoDB which reported about 5500 commits to their code throughout the 2019/2020 release cycle averaging to just about 15 commits per day (\cite{daly2021} p. 2). If the only benchmarking data available is these from the two release candidates this results in an extensive additional overhead to retroactively reconstruct the cause of the root cause. Additionally when only evaluating the performance before release candidates as an affect one would also only detect a performance change at that point. However generally software aims to detect performance defects as soon as possible. 
 
 	One additional dimension that has to be considered is the aspect of configurability. In modern software systems there are often configuration options available which allows to en- and disable certain features to create a tailor-made system variant. However, this additional layer of complexity adds further challenges to benchmarking and change detection. As already very few configuration options lead to an combinatorial explosion of the possible system variants which makes it unfeasible to benchmark all of them(See \cite{apel2020} p. 1).
-
-TODO: Elaborate how/if this can be used to compare arbitrary results
 
 	\subsection{Continuous Benchmarking}
 In this section a technique that will further be referred to as \textit{Continuous Benchmarking} will be elaborated further. First the motivation of this approach will be discussed to give a working definition. Secondly a selection of possible continuous benchmarking strategies will be outlined. Lastly the possible benefits and potential challenges will be showcased and weighted to give an assessment of using such a technique.
@@ -267,7 +286,7 @@ In this section a technique that will further be referred to as \textit{Continuo
 
 	The termination of the algorithm for a specific cluster is determined by repeating the above steps on a random permutation of the input cluster data. If then the highest $\hat{Q}$ value does not significantly changes it is likely that the series does not contain a relevant change point.
 
-	Within this paper the readily available python package implemented by engineers of MongoDB will be used\footnote{TODO: Link to GitHub}. A broad overview of the algorithm that includes the exact calculation of $\hat{Q}$ is described by the work of Daly et al. (\cite{daly2020} p. 69) while an in depth description of the algorithm is given in the original paper by Matteson and James (\cite{Matteson2014}).
+	Within this paper the readily available python package implemented by engineers of MongoDB will be used(\cite{gitmongo}). A broad overview of the algorithm that includes the exact calculation of $\hat{Q}$ is described by the work of Daly et al. (\cite{daly2020} p. 69) while an in depth description of the algorithm is given in the original paper by Matteson and James (\cite{Matteson2013}).
 
 \section{Experiment}
 In this chapter we will further elaborate on the experiment that was conducted. The chapter will give an overview over the general experiment idea and it's goals, the experiment setup and the specific results that were achieved in the experiment runs. An in-depth analysis and evaluation of the experiment results is performed in \autoref{sec:exp_evaluation}
@@ -287,7 +306,6 @@ In this chapter we will further elaborate on the experiment that was conducted. 
 				\item Complexity of implementation?
 				\item Reliably detecting performance changes?
 				\item Reducing the amount of manual work required by the developer?
-				\item Can we use this metric to compare arbitrary commits? TODO: Maybe remove
 			\end{itemize}
 	\end{itemize}
 
@@ -298,16 +316,16 @@ In this chapter we will further elaborate on the experiment that was conducted. 
 	\subsection{Experiment Setup}
 	\label{ssec:exp_setup}
 	
-	To perform the experiment as described in \autoref{ssec:exp_goals} the open-source implementation \texttt{lz4}\footnote{\url{https://github.com/lz4/lz4}} will be used. \texttt{lz4} is a compression library with an active commit history. In total \texttt{lz4} offers 31 releases and more than 2500 commits in total\footnote{As of 16.09.2021}. 
+	To perform the experiment as described in \autoref{ssec:exp_goals} the open-source implementation \texttt{lz4}(\cite{gitlz4}) will be used. \texttt{lz4} is a compression library with an active commit history. In total \texttt{lz4} offers 31 releases and more than 2500 commits in total\footnote{As of 16.09.2021}. 
 	
-	For the benchmark itself the open source project \texttt{lzbench}\footnote{\url{https://github.com/inikep/lzbench}} will be used. Lzbench is an in-memory compression benchmarking tool that is designed to compare different implementations of compression algorithms. For this experiment all other compression algorithm implementations will be disabled so that only \texttt{lz4} will be benchmarked at different releases and commits. 
+	For the benchmark itself the open source project \texttt{lzbench}(\cite{gitlzbench}) will be used. Lzbench is an in-memory compression benchmarking tool that is designed to compare different implementations of compression algorithms. For this experiment all other compression algorithm implementations will be disabled so that only \texttt{lz4} will be benchmarked at different releases and commits. 
 	
 	Lzbench offers the option to disable all the other compression algorithms at compile time. The \texttt{lz4} version that is used for the benchmark can simply be changed by overwriting the corresponding lz4 files within the lzbench repository before compilation. In the experiment a slightly adapted version of Lzbench will be used that has the other compression algorithms disabled at compile time and also incorporates some minor changes that were required to ensure compilation on the cluster infrastructure.
 
-	Lzbench also offers a variety of command line switches that influence the behaviour of the benchmark. An overview of the switches that were used for executing this experiment can be found in \autoref{tab:cmd_switches}\footnote{Also see: \url{https://github.com/inikep/lzbench}}.
+	Lzbench also offers a variety of command line switches that influence the behaviour of the benchmark. An overview of the switches that were used for executing this experiment can be found in \autoref{tab:cmd_switches}.
 
 	\begin{table}
-		\caption{Overview of used command line switches for lzbench}
+		\caption{Overview of used command line switches for lzbench (\cite{gitlzbench})}
 		\label{tab:cmd_switches}
 		\centering
 		\begin{tabular}{|c|c|}
@@ -331,7 +349,7 @@ In this chapter we will further elaborate on the experiment that was conducted. 
 		\end{tabular}
 	\end{table}
 	
-	As a workload for the compression benchmark the Silesia Data Corpus will be used\footnote{\url{http://sun.aei.polsl.pl/~sdeor/index.php?page=silesia}}. The Silesia Corpus is a diverse dataset that has specifically been designed as a compression workload with the motivation in mind to include a variety of different data sources. By this the Silesia Corpus tries to not favour any compression algorithms that perform very well on a certain type of data(TODO: Citation needed).
+	As a workload for the compression benchmark the Silesia Data Corpus will be used. The Silesia Corpus is a diverse dataset that has specifically been designed as a compression workload with the motivation in mind to include a variety of different data sources. By this the Silesia Corpus tries to not favour any compression algorithms that perform very well on a certain type of data(\cite{silesia}).
 
 	Since the \texttt{lz4} repository consists of over 2500 commits benchmarking each individual commit is infeasible for the scope of this paper as it would both generate too much data to evaluate properly as well as strain the available shared server resources too much. Therefore a two staged approach will be used:
 \begin{itemize}
@@ -354,7 +372,7 @@ For the performance change detection up to three different approaches to compare
 
 	\subsection{Experiment Implementation and Results}
 
-	The benchmark was implemented using a few simple bash scripts that perform an lzbench run on a given list of commits. The benchmark script copies all source files required for building lzbench to a separate build directory. It then checks out the given commit of lz4 and overwrites the lz4 specific files in the lzbench directory. This custom built lzbench version is then used to run the benchmark. All code that was used to perform this benchmark can be found on GitHub (\cite{TODO}).
+	The benchmark was implemented using a few simple bash scripts that perform an lzbench run on a given list of commits. The benchmark script copies all source files required for building lzbench to a separate build directory. It then checks out the given commit of lz4 and overwrites the lz4 specific files in the lzbench directory. This custom built lzbench version is then used to run the benchmark. All code that was used to perform this benchmark can be found on GitHub (\cite{gitSysBench}).
 
 	\begin{figure}[ht!]
 		\centering
@@ -363,12 +381,7 @@ For the performance change detection up to three different approaches to compare
 		\label{fig:release-bench}
 	\end{figure}
 
-	As described in the previous section the benchmark was first performed on all versioned releases in the Git repository. The results of this initial run are shown in \autoref{fig:release-bench}. It can be observed that throughout the release history the compression speed stayed relatively consistent. For the decompression speed however, multiple performance increases can be observed throughout the release history. \autoref{tab:rel-speedup} shows the relative speedup between the individual versions.
-
-	\begin{table}
-		\caption{Relative speedup between lz4 releases}
-		\label{tab:rel-speedup}
-	\end{table}
+	As described in the previous section the benchmark was first performed on all versioned releases in the Git repository. The results of this initial run are shown in \autoref{fig:release-bench}. It can be observed that throughout the release history the compression speed stayed relatively consistent. For the decompression speed however, multiple performance increases can be observed throughout the release history. 
 
 	Based on these results the commit range between \textit{v1.8.1} and \textit{v1.8.2} was selected as the commit range for a more thorough and detailed analysis. The results of this analysis are further discussed in \autoref{sec:exp_evaluation}. However as the data for the lz4 benchmark only indicated a performance improvement and the goal of this work is to evaluate the detection both performance improvements and regressions, the release benchmarks were repeated with the \texttt{lz4hc} compression algorithm. The \texttt{lz4hc} implementation is a variant of the \texttt{lz4} implementation that features a higher compression rate at the cost of lower compression speed. As \texttt{lz4hc} is also included in the same source code as \texttt{lz4} the only adaption required to the benchmark was to replace the compression algorithm used in the command line parameters passed.
 
@@ -400,21 +413,22 @@ Before applying automated analysis methods to the data gathered, a manual evalua
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=0.8\textwidth]{graph/lz4_commits_decompression}
-	\caption{Decompression speed of \texttt{lz4} between releases \textit{v1.8.1} and \textit{v1.8.2}}
-	\label{fig:lz4_commit_bench}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{graph/lz4_commits_decompression}
+		\caption{Decompression speed of \texttt{lz4}}
+		\label{fig:lz4_commit_bench}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{graph/lz4hc_commits_compression}
+		\caption{Decompression speed of \texttt{lz4hc}}
+		\label{fig:lz4hc_commit_bench}
+	\end{subfigure}
+	\caption{Benchmark results for individual commits}
 \end{figure}
 
 For the analysis of \texttt{lz4} data there are a few key observation that we made while evaluating the data manually. First of all, it seems that there are at least two general "performance levels" that can be observed from the data: While the majority of the data lies around a speed of 2200 MB/s in the end we see a clear improvement to a level of around 2400 MB/s. We also see that at the very beginning and near the end two more steep increases can be oberseved. However as we are missing the data before and after these benchmarks we cannot rule them out to just be outliers in the dataset. Therefore we do not consider these as additional performance levels.
 
 Another observation that we made were the intense performance increases that can be observed throughout the data series that peak to around 2900 MB/s. While manually reviewing the code changes in the corresponding code commits we could not find any connection to the code changes made that would cause such a spike in the decompression speed nor did we find any evidence of changes being reverted in the following commits that would cause the performance to return to the previous level. This observation will be further discussed in \autoref{ssec:refl_quality} and \autoref{ssec:refl_shortcomings}.
-
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=0.8\textwidth]{graph/lz4hc_commits_compression}
-	\caption{Decompression speed of \texttt{lz4hc} between releases \textit{v1.8.0} and \textit{v1.8.1}}
-	\label{fig:lz4hc_commit_bench}
-\end{figure}
 
 For the data observed for the \texttt{lz4hc} benchmark the data observed does not draw such a clear picture as for the \texttt{lz4} one. From our perspective only one clear change point can be directly observed for the performance drop near the end. Before that there is a lot of fluctuation in the data. One can observe a few short plateaus emerging in the performance data before that, however we cannot decide if these are just effects of random noise or actual relevant performance changes.
 
@@ -437,20 +451,7 @@ After manually reviewing the data we performed a programmatic evaluation of the 
 		\\\hline
 	\end{tabular}
 	\caption{Overview of changes detected by the different methods}
-\end{table}
-
-\begin{table}
-	\centering
-	\begin{tabular}{|c||c|c|c|}
-		\hline
-		\textbf{Benchmark}&\textbf{Jump Detection}&\textbf{Trend Detection}&\textbf{E-Divisive Means}
-		\\\hline\hline
-		\texttt{lz4}&24&27&4
-		\\\hline
-		\texttt{lz4hc}&23&43&3
-		\\\hline
-	\end{tabular}
-	\caption{Overview of changes detected by the different methods}
+	\label{tab:perf_changes}
 \end{table}
 After applying these techniques we observed that they differ vastly in the amount of supposed performance changes that they detect. In \autoref{tab:perf_changes} we list how many performance changes were detected for each technique, while \autoref{fig:perf_commit_cp} shows a visual representation of the change points in the datasets.
 
@@ -482,7 +483,7 @@ After applying these techniques we observed that they differ vastly in the amoun
 		\caption{\texttt{lz4hc} using Trend Detection}
 	\end{subfigure}
 	\caption{Graphical representation of all change detections on the both datasets}
-	\label{fig:}
+	\label{fig:perf_commit_cp}
 \end{figure}
 
 Surprisingly for us, for both datasets the trend detection flagged the most commits as a performance change. We initially expected that because of the many outliers in our dataset that jump detection would flag the most commits as for every outlier two commits would be flagged -- the outlier and the commit right after that. By far the fewest commits were flagged as changes buy the E-Divisive Means algorithm. To our surprise E-Divisive for the \texttt{lz4} algorithm flagged two additional change points with a relatively small overall performance change that we missed in our manual review. While it is impressive that E-Divisive Mean can detect such changes it is a matter of application domain whether detecting such changes is desirable or if further parameters of the algorithm needs to be tuned.
@@ -517,6 +518,7 @@ To evaluate how quickly a performance change is detected by E-Divisive Means, we
 		\\\hline
 	\end{tabular}
 	\caption{Overview of changes detected by the different methods}
+	\label{tab:ediv_occ}
 \end{table}
 
 So for our example, E-Divisive Means detects the changes relatively quich in most cases. When reviewing these commits by hand we found that the biggest time difference was about four weeks until the change point got detected (Between commit 104 and 122 for \texttt{lz4hc}). For most of the other change points it was only a few days until the detection. Whether or not a detection time of four weeks is acceptable is heavily project dependent and cannot be answered by us generically.
@@ -537,13 +539,13 @@ In this section the results of this work are critically reflected upon. A focus 
 
 	The other aspect however, is how relevant the results of our experiment are to our overarching question: "Should we benchmark software only before releases or after every commit". For this we believe our benchmark has only a limited relevance. The main reason for this is that our experiment only covered a really simplified and streamlined example. For the example of \texttt{lz4} performing a benchmark after every commit might be feasible; However our benchmark did not at all consider the dimension of modern software systems such as configurability which makes this approach unfeasible for most potential use-cases.
 
-\paragraph{Reproducibility} -- As all code artifact that have been used to perform this benchmark have been documented in a GitHub repository. A third-party could use these in addition to the information given in this paper regrding the hardware configuration to closely reproduce the results.
+\paragraph{Reproducibility} -- As all code artifact that have been used to perform this benchmark have been documented in a GitHub repository. A third-party could use these in addition to the information given in this paper regarding the hardware configuration to closely reproduce the results.
 
-\paragraph{Fairness} -- As for fairness there are a few things to critisize. Our benchmark is completely created artificially and is overly simplistic by nature. Therefore the fairness of our benchmarking approach could be questionable.
+\paragraph{Fairness} -- As for fairness there are a few things to criticise. Our benchmark is completely created artificially and is overly simplistic by nature. Therefore the fairness of our benchmarking approach could be questionable.
 
-\paragraph{Verifiability} -- In terms of verifiability, our benchmark ensures that only a predefined software configuration is used. However our benchmark only copies the build files from an existing directory on the users hardware and does not validade if any unexpected changes have been made. In an extended approach we would rather consider the code to be cloned directly from a public Git repository, preferably with a specific commit defined.
+\paragraph{Verifiability} -- In terms of verifiability, our benchmark ensures that only a predefined software configuration is used. However our benchmark only copies the build files from an existing directory on the users hardware and does not validate if any unexpected changes have been made. In an extended approach we would rather consider the code to be cloned directly from a public Git repository, preferably with a specific commit defined.
 
-Additionally our detailled experiment contained some outliers that we could not explain based on our findings. We now believe that this might be an error in our benchmarking approach as firstly, the achieved performance results are closely to those from recent \texttt{lz4} versions. Additionally when repeating the benchmark on a smaller subset, we could not reliably reproduce these results. Unfortunately in the timeframe of this seminar we could not identify the exact cause of this.
+Additionally our detailed experiment contained some outliers that we could not explain based on our findings. We now believe that this might be an error in our benchmarking approach as firstly, the achieved performance results are closely to those from recent \texttt{lz4} versions. Additionally when repeating the benchmark on a smaller subset, we could not reliably reproduce these results. Unfortunately in the time frame of this seminar we could not identify the exact cause of this.
 
 \paragraph{Usability} -- In terms of usability, we believe that our benchmark is, at most to a certain extent, quite usable. While we used a compute cluster to run multiple benchmarks in parallel we believe that comparable results could also be reproduced by just using one local machine.
 
@@ -559,21 +561,21 @@ Additionally our detailled experiment contained some outliers that we could not 
 
 	To react and further evaluate on the shortcomings identified there are several opportunities for future works that could extend this paper. Most significantly we should focus on fixing the benchmark suite itself such that we can verify the correctness of the data produced.
 
-	Secondly we believe that for future works the focus of the research question should shift a bit. While this work shows that in an optimal scenario one should benchmark every commit, this is not applicable in practive. Therefore the focus should rather shift to find strategies to preemptively select the "correct" commits for benchmarking.
+	Secondly we believe that for future works the focus of the research question should shift a bit. While this work shows that in an optimal scenario one should benchmark every commit, this is not applicable in practice. Therefore the focus should rather shift to find strategies to preemptively select the "correct" commits for benchmarking.
 
-	Lastly we believe that that aspect of configurability needs to be further considered. While we already collected data for two variants of \texttt{lz4}, we did not use it yet to find any collaborations between the data. We believe that exploring possibilities to link performance changes across variants can be very benefitial.
+	Lastly we believe that that aspect of configurability needs to be further considered. While we already collected data for two variants of \texttt{lz4}, we did not use it yet to find any collaborations between the data. We believe that exploring possibilities to link performance changes across variants can be very beneficial.
 
 \section{Related Work}
 
-Several similar work has been published regarding continuous performance benchmarking. Both Antz et al. and Waller at al. describe methods how benchmarking can be included into a continuous integration pipeline to enable continuous benchmarking(\cite{}). Additionally Daly desribes in multiple works how a continuous benchmarking approach has been introduced to MongoDB to enable better detection of performance changes.
+Several similar work has been published regarding continuous performance benchmarking. Both Antz et al. and Waller at al. describe methods how benchmarking can be included into a continuous integration pipeline to enable continuous benchmarking(\cite{antz2019}, \cite{waller2015}). Additionally Daly describes in multiple works how a continuous benchmarking approach has been introduced to MongoDB to enable better detection of performance changes(\cite{daly2020}, \cite{daly2021}).
 
-In the domain of identifying performance changes across different software configurations and variants, Apel et al. present a novel change point detection algorithm that can identify configuration-dependent performance changes while only exploring a small subset of the configuration space (\cite{}).
+In the domain of identifying performance changes across different software configurations and variants, Apel et al. present a novel change point detection algorithm that can identify configuration-dependent performance changes while only exploring a small subset of the configuration space (\cite{apel2020}).
 
-Multiple works have also been presented to predict performance changes in software based in order to reduce the amount of commits that need to be benchmarked. One of these approaches is \textit{Perphecy} presented by Oliveria et al. (\cite{}). Similarly, Chen et al. present an approach which identifies which predicts which test cases may suffer from performance regressions after a code change(\cite{}).
+Multiple works have also been presented to predict performance changes in software based in order to reduce the amount of commits that need to be benchmarked. One of these approaches is \textit{Perphecy} presented by Oliveria et al. (\cite{oliveira2017}). Similarly, Chen et al. present an approach which identifies which predicts which test cases may suffer from performance regressions after a code change(\cite{chen2020}).
 
 \section{Conclusion}
 
-In this paper we tried to answer the question whether one should benchmark software only before releases or after every commit. We have explored both possibilities and compared different performance change detection methods. We come to the conclusion that, in an optimal scenario, benchmarking every commit would be the preferrable option.
+In this paper we tried to answer the question whether one should benchmark software only before releases or after every commit. We have explored both possibilities and compared different performance change detection methods. We come to the conclusion that, in an optimal scenario, benchmarking every commit would be the preferable option.
 
 However we also want to highlight that this paper is based on data from a overly simplistic benchmark and suffers from several shortcomings. Therefore the applicability to productive systems is limited and for most real world systems benchmarking every commit is simply not feasible.
 
