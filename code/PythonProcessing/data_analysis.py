@@ -44,6 +44,7 @@ def e_divisive_analysis(time_series):
     result = dict()
 
     for idx in range(1,len(time_series)):
+        print(idx)
         partial_changepoints = energy_statistics.e_divisive(time_series[:idx], pvalue=0.1, permutations=100)
 
         for cp in change_points:
