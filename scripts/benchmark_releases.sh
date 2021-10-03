@@ -9,10 +9,10 @@
 
 USER=abeltluk
 USER_BASE_DIR=/scratch/$USER
-RELEASES_FILE=$USER_BASE_DIR/lz4releases
+RELEASES_FILE=$USER_BASE_DIR/SystemsBenchmarking/benchmark/lz4releases
 
 RELEASES_LIST=($(<$RELEASES_FILE))
 RELEASE=${RELEASES_LIST[${SLURM_ARRAY_TASK_ID}]}
-BENCH_BASE_DIR=$USER_BASE_DIR/release_benchmark
+BENCH_BASE_DIR=$USER_BASE_DIR/SystemsBenchmarking/release_benchmark/lz4hc
 
 srun ./run_benchmark.sh $RELEASE $BENCH_BASE_DIR
